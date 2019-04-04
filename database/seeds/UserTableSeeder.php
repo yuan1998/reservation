@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
         $user->save();
 
         $user           = \App\User::find(2);
-        $user->username = 'test';
+        $user->username = 'admin';
         $user->save();
     }
 }

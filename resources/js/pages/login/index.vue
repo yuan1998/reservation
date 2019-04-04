@@ -39,8 +39,8 @@
         data() {
             return {
                 form             : {
-                    username: 'yuan1998',
-                    password: '3322123aaa',
+                    username: '',
+                    password: '',
                 },
                 rules            : {
                     username: [
