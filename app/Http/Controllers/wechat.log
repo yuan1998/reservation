@@ -1,0 +1,16 @@
+[2019-04-04 15:43:32] NULL.INFO: >>>>>>>>
+GET /sns/jscode2session?access_token=20_89TaetHFf8Ql_qcPUyF_e4Lf_roGxNrxo5nbEnzcjq_09fXXQi608l0Bxb8sHHjEInVFans7OXLCaad63Cwh2dWyEOl1rsOyZj9fYNPYUxv2m4H9qjg6M3J36bTHJflc4BASIQnFatptVRkZPAFhAGALWB&appid=wx40ca2bd02fe5ae03&secret=6332e0fcf3ad6ab0caca90d2d23b67e4&js_code=011LZX6G1BZg380l6Y7G17p87G1LZX6D&grant_type=authorization_code HTTP/1.1
+Host: api.weixin.qq.com
+User-Agent: GuzzleHttp/6.3.3 curl/7.47.0 PHP/7.1.7-1+ubuntu16.04.1+deb.sury.org+1
+
+
+<<<<<<<<
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/plain
+Date: Thu, 04 Apr 2019 07:43:32 GMT
+Content-Length: 82
+
+{"session_key":"RBnfaqbybLfSJNooMq1WUg==","openid":"o3aUZ41T1woTmMOy7zL2LHWd01Bs"}
+--------
+NULL  

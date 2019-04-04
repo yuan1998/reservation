@@ -1,0 +1,84 @@
+.container-aside {
+    width: @aside-width;
+    background-color: #304156;
+    #side-header {
+        //background-color: @primary-color;
+        flex-basis: @header-height;
+    }
+
+    .el-menu {
+        border-right-width: 0;
+    }
+}
+
+.container-header {
+    height: auto !important;
+    border-bottom: 1px solid #f6f6f6;
+    //background-color: @primary-color;
+
+    &.el-header {
+        padding: 0;
+    }
+}
+
+.container-main {
+    background-color: @background-color;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .nav-container {
+        flex: none;
+        flex-basis: 40px;
+        background-color: #fff;
+        justify-self: center;
+
+        .el-tabs__nav {
+            margin-left: -1px;
+        }
+        .el-tabs__header {
+            margin: 0;
+        }
+        .el-tabs__content {
+            display: none;
+        }
+        .el-tabs--card > .el-tabs__header .el-tabs__item {
+            border-bottom: none;
+        }
+    }
+
+    .router-view {
+        flex: auto;
+        overflow: hidden;
+    }
+
+    .page-container {
+        height: 100%;
+        overflow: auto;
+    }
+
+    .table-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .table-content {
+            flex: auto;
+            overflow: hidden;
+        }
+
+        .table-pagination {
+            text-align: right;
+            flex: none;
+        }
+    }
+}
+
+.container-wrapper {
+    height: 100%;
+}
+
+.el-checkbox__label {
+    position: static;
+}

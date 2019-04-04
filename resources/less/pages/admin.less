@@ -1,0 +1,43 @@
+.page-container {
+    padding: 15px;
+}
+
+.reservation-page {
+    .menu-button {
+        opacity: 0;
+        transition: opacity 250ms ease-in-out;
+    }
+
+    .table-container .el-table--enable-row-transition .el-table__body td:hover {
+        .menu-button {
+            opacity: 1;
+        }
+    }
+}
+
+.table-container {
+    background-color: #fff;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    border: 0;
+    .table-header {
+        padding: 10px;
+
+    }
+
+    .el-table--border {
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .el-table--enable-row-transition .el-table__body {
+        td {
+            overflow: hidden;
+        }
+        .cell {
+            overflow: visible;
+            position: static;
+        }
+    }
+
+}
