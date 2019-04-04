@@ -387,6 +387,11 @@ var defaultForm = {
       return state.total;
     }
   }), {
+    filterUser: function filterUser() {
+      return this.users.filter(function (e) {
+        return e.id !== 1;
+      });
+    },
     dialogStatus: {
       get: function get() {
         return this.dialogFormVisible;
@@ -1044,7 +1049,7 @@ var render = function() {
                   {
                     ref: "table",
                     staticStyle: { width: "100%" },
-                    attrs: { data: _vm.users, height: "100%" }
+                    attrs: { data: _vm.filterUser, height: "100%" }
                   },
                   [
                     _c("el-table-column", {

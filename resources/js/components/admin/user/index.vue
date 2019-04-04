@@ -6,7 +6,7 @@
             <div class="table-content">
                 <el-table v-if="users"
                           ref="table"
-                          :data="users"
+                          :data="filterUser"
                           height="100%"
                           style="width: 100%">
                     <el-table-column
@@ -52,10 +52,10 @@
                             fixed="right"
                             align="right">
                         <!--<template slot="header" slot-scope="scope">-->
-                            <!--<el-input-->
-                                    <!--v-model="search"-->
-                                    <!--size="mini"-->
-                                    <!--placeholder="输入关键字搜索"/>-->
+                        <!--<el-input-->
+                        <!--v-model="search"-->
+                        <!--size="mini"-->
+                        <!--placeholder="输入关键字搜索"/>-->
                         <!--</template>-->
                         <template slot-scope="scope">
                             <el-button
@@ -254,6 +254,9 @@
                 page     : state => state.page,
                 total    : state => state.total
             }),
+            filterUser() {
+                return this.users.filter(e => e.id !== 1);
+            },
             dialogStatus: {
                 get() {
                     return this.dialogFormVisible;

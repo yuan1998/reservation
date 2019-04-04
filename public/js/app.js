@@ -95317,7 +95317,7 @@ var constantRoutes = [{
   children: [{
     path: '/redirect/:path*',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ../pages/redirect/index */ "./resources/js/pages/redirect/index.vue"));
+      return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ../pages/redirect/index */ "./resources/js/pages/redirect/index.vue"));
     }
   }]
 }, {
@@ -95345,7 +95345,7 @@ var constantRoutes = [{
   children: [{
     path: 'dashboard',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(13), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ../components/admin/home */ "./resources/js/components/admin/home.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(14), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ../components/admin/home */ "./resources/js/components/admin/home.vue"));
     },
     name: 'dashboard',
     meta: {
@@ -95460,7 +95460,7 @@ var activityRouter = {
   children: [{
     path: 'activity',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ../../pages/Activity/activity */ "./resources/js/pages/Activity/activity.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(12), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../../pages/Activity/activity */ "./resources/js/pages/Activity/activity.vue"));
     },
     name: 'activities',
     meta: {

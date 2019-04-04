@@ -26,7 +26,7 @@ class ChangeReservationAddDateField extends Migration
     public function down()
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->unsignedInteger('timeline_id')->nullable(false)->change();
+//            $table->unsignedInteger('timeline_id')->nullable(false)->change();
         });
     }
 }

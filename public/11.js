@@ -57,8 +57,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: {
-        username: 'yuan1998',
-        password: '3322123aaa'
+        username: '',
+        password: ''
       },
       rules: {
         username: [{

@@ -28,9 +28,9 @@ class ChangeExpertFieldNullable extends Migration
     public function down()
     {
         Schema::table('experts', function (Blueprint $table) {
-            $table->string('avatar')->nullable(false)->change();
-            $table->string('description')->nullable(false)->change();
-            $table->string('remark')->nullable(false)->change();
+            $table->string('avatar')->nullable()->change();
+            $table->string('description')->nullable()->change();
+            $table->string('remark')->nullable()->change();
         });
     }
 }
