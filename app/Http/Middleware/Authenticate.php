@@ -20,7 +20,7 @@ class Authenticate extends Middleware
                 return $this->auth->shouldUse($guard);
             }
         }
-
+        
         throw new UnauthorizedHttpException('JWTAuth', '请先登录.');
     }
 
