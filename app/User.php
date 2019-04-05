@@ -4,12 +4,9 @@ namespace App;
 
 use App\Models\Project;
 use App\Models\Reservation;
-use App\Traits\ActivityTrail;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Activitylog\Traits\CausesActivity;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -24,7 +21,6 @@ class User extends Authenticatable implements JWTSubject
     protected static $logName = 'user';
 
     protected $guard_name = 'api';
-
 
     /**
      * The attributes that are mass assignable.
@@ -63,6 +59,13 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * fix Laravel-Permission `call undefined method getPermissionNames ` bug.
+     */
+    public function getPermissionNames()
+    {
+        return $this->permissions->pluck('name');
+    }
 
     public function createdProject()
     {
