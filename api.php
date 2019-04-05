@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-
 Route::post('auth/login', 'AuthController@login');
 Route::post('weixin/login', 'AuthController@weappStore');
 

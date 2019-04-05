@@ -542,7 +542,8 @@
             },
             async handleDateTimeChange(value) {
                 if (value && !this.loading) {
-                    this.$router.replace({ query: { ...this.$route.query, date: this.dateTime } });
+                    // this.$router.replace({ query: { ...this.$route.query, date: this.dateTime } });
+                    this.handleInit();
                 }
             },
             async handleNewReservation() {
