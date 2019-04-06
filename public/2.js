@@ -1312,11 +1312,8 @@ var defaultForm = {
             switch (_context10.prev = _context10.next) {
               case 0:
                 if (value && !this.loading) {
-                  this.$router.replace({
-                    query: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, this.$route.query, {
-                      date: this.dateTime
-                    })
-                  });
+                  // this.$router.replace({ query: { ...this.$route.query, date: this.dateTime } });
+                  this.handleInit();
                 }
 
               case 1:

@@ -95357,8 +95357,7 @@ var constantRoutes = [{
   }]
 }];
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  mode: 'history',
-  // require service support
+  // mode          : 'history', // require service support
   scrollBehavior: function scrollBehavior() {
     return {
       y: 0
