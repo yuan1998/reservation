@@ -114,7 +114,7 @@ class Controller extends BaseController
             $permission      = arrInPermission(Permission::query(), $permission);
             $permissionNames = $permission->pluck('name');
 
-            $modelBeforePermission = $model->$this->permissions->pluck('name');
+            $modelBeforePermission = $model->permissions->pluck('name');
             $model->syncPermissions($permissionNames);
             $property = [
                 'attribute' => $permissionNames,
