@@ -99,7 +99,7 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        if (!$this->hasPermission('reservation:show')) {
+        if (!$this->hasPermission(['reservation:index','reservation:table'])) {
             return $this->respondPermission();
         }
         return new ReservationResource($reservation);
@@ -114,7 +114,7 @@ class ReservationController extends Controller
      */
     public function update(Request $request, Reservation $reservation)
     {
-        if (!$this->hasPermission('reservation:update')) {
+        if (!$this->hasPermission('reservation:update') && !$this->createByMe($reservation)) {
             return $this->respondPermission();
         }
         $data = $request->all();

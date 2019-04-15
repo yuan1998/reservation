@@ -26,6 +26,12 @@ class Controller extends BaseController
         return $this->guard()->user();
     }
 
+    public function createByMe($model , $field  = 'created_user_id')
+    {
+        $user = $this->getUser();
+        return $user->id === $model[$field];
+    }
+
     public function hasPermission($permission, $admin = true)
     {
         $user = $this->getUser();
