@@ -146,9 +146,7 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        $user = $this->getUser();
-        if (!$this->hasPermission('reservation:destroy') &&
-            $reservation->user_id !== $user->id) {
+        if (!$this->hasPermission('reservation:destroy') && !$this->createByMe($reservation)) {
             return $this->respondPermission();
         }
 
