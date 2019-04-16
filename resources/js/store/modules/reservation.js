@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import moment                                              from 'moment'
 import { idToArray, mergeApi, oneOf, fitlerObjectOfArray } from "../../utils/assets";
 import { authRequest }                                     from "../../api/request";
@@ -59,11 +60,11 @@ export default {
             })
         },
         reservationDate(state, { date, data }) {
-            state.dateData[ date ] = data;
+            Vue.set(state.dateData , date , data);
+            // state.dateData[ date ] = data;
         },
         addDateReservation(state, data) {
             let date = moment(data.date).format(format);
-            console.log('state.dateData[ date ] :', state.dateData[ date ]);
             if (!state.dateData[ date ]) {
                 return;
             }
@@ -72,7 +73,6 @@ export default {
     },
     getters   : {
         displayReservation({ reservations }) {
-
             return (reservations || []).filter(item => item.display);
         }
     },

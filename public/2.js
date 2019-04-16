@@ -639,6 +639,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -773,21 +774,56 @@ var defaultForm = {
         }]
       },
       submitLoading: false,
-      formDateLoading: false,
-      // projects         : [],
+      formDateLoading: false // projects         : [],
       // experts          : [],
       // timelines        : [],
-      restDate: [],
-      reservationData: [],
-      formRests: []
+      //restDate         : [],
+      // reservationData  : [],
+      // formRests        : [],
+
     };
   },
   mounted: function mounted() {
     this.handleInit();
   },
   computed: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
-    stateRestData: function stateRestData(state) {
-      return state.Rest.restData;
+    restDate: function restDate(state) {
+      var date = moment__WEBPACK_IMPORTED_MODULE_3___default()(this.dateTime).format('YYYY-MM-DD');
+      var data = state.Rest.restData;
+      var result = [];
+
+      if (data && date) {
+        console.log('data :', data);
+        console.log('date :', date);
+        console.log(data.hasOwnProperty(date));
+        console.log('data[ date ] :', data[date]);
+        result = data[date] || [];
+      }
+
+      console.log('result :', result);
+      return result;
+    },
+    reservationData: function reservationData(state) {
+      var date = moment__WEBPACK_IMPORTED_MODULE_3___default()(this.dateTime).format('YYYY-MM-DD');
+      var data = state.Reservation.dateData;
+      var result = [];
+
+      if (data && date) {
+        result = data[date] || [];
+      }
+
+      return result;
+    },
+    formRests: function formRests(state) {
+      var data = state.Rest.restData;
+      var result = [];
+
+      if (data && this.form) {
+        var date = moment__WEBPACK_IMPORTED_MODULE_3___default()(this.form.date).format('YYYY-MM-DD');
+        result = data[date] || [];
+      }
+
+      return result;
     },
     timelines: function timelines(state) {
       return state.Timeline.timelines || [];
@@ -797,29 +833,8 @@ var defaultForm = {
     },
     experts: function experts(state) {
       return state.Expert.allExperts || [];
-    },
-    stateReservationData: function stateReservationData(state) {
-      return state.Reservation.dateData;
     }
   }), {
-    // reservationData: {
-    //     get() {
-    //         let date = moment(this.dateTime).format('YYYY-MM-DD');
-    //         return (this.stateReservationData && this.stateReservationData[ date ]) || [];
-    //     }
-    // },
-    // restDate() {
-    //     let date = moment(this.dateTime).format('YYYY-MM-DD');
-    //     return (this.stateRestData && this.stateRestData[ date ]) || [];
-    // },
-    // formRests() {
-    //     let result = [];
-    //     if (this.form && this.form.date) {
-    //         let date = moment(this.form.date).format('YYYY-MM-DD');
-    //         result   = (this.stateRestData && this.stateRestData[ date ]) || [];
-    //     }
-    //     return result;
-    // },
     dialogStatus: {
       get: function get() {
         return this.dialogFormVisible;
@@ -1046,10 +1061,9 @@ var defaultForm = {
                 });
 
               case 3:
-                this.formRests = _context2.sent;
                 this.formDateLoading = false;
 
-              case 5:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -1177,9 +1191,6 @@ var defaultForm = {
                 });
 
               case 3:
-                this.reservationData = _context5.sent;
-
-              case 4:
               case "end":
                 return _context5.stop();
             }
@@ -1208,9 +1219,6 @@ var defaultForm = {
                 });
 
               case 3:
-                this.restDate = _context6.sent;
-
-              case 4:
               case "end":
                 return _context6.stop();
             }

@@ -3,6 +3,7 @@
         <div class="table-container"
              v-loading.lock="loading"
              :element-loading-text="loadingText">
+
             <div class="table-header">
                 <div>
                     <el-date-picker
@@ -288,9 +289,9 @@
                 // projects         : [],
                 // experts          : [],
                 // timelines        : [],
-                restDate         : [],
-                reservationData  : [],
-                formRests        : [],
+                //restDate         : [],
+                // reservationData  : [],
+                // formRests        : [],
             }
         },
         mounted() {
@@ -298,36 +299,49 @@
         },
         computed  : {
             ...mapState({
-                stateRestData       : state => state.Rest.restData,
-                timelines           : state => {
+                restDate(state) {
+                    let date   = moment(this.dateTime).format('YYYY-MM-DD');
+                    let data   = state.Rest.restData;
+                    let result = [];
+                    if (data && date) {
+                        console.log('data :', data);
+                        console.log('date :', date);
+                        console.log(data.hasOwnProperty(date));
+                        console.log('data[ date ] :', data[ date ]);
+                        result = data[ date ] || [];
+                    }
+                    console.log('result :', result);
+
+                    return result;
+                },
+                reservationData(state) {
+                    let date   = moment(this.dateTime).format('YYYY-MM-DD');
+                    let data   = state.Reservation.dateData;
+                    let result = [];
+                    if (data && date) {
+                        result = data[ date ] || [];
+                    }
+                    return result;
+                },
+                formRests(state) {
+                    let data   = state.Rest.restData;
+                    let result = [];
+                    if (data && this.form) {
+                        let date = moment(this.form.date).format('YYYY-MM-DD');
+                        result   = data[ date ] || [];
+                    }
+                    return result;
+                },
+                timelines: state => {
                     return state.Timeline.timelines || [];
                 },
-                projects            : state => {
+                projects : state => {
                     return state.Project.projects || [];
                 },
-                experts             : state => {
+                experts  : state => {
                     return state.Expert.allExperts || [];
                 },
-                stateReservationData: state => state.Reservation.dateData
             }),
-            // reservationData: {
-            //     get() {
-            //         let date = moment(this.dateTime).format('YYYY-MM-DD');
-            //         return (this.stateReservationData && this.stateReservationData[ date ]) || [];
-            //     }
-            // },
-            // restDate() {
-            //     let date = moment(this.dateTime).format('YYYY-MM-DD');
-            //     return (this.stateRestData && this.stateRestData[ date ]) || [];
-            // },
-            // formRests() {
-            //     let result = [];
-            //     if (this.form && this.form.date) {
-            //         let date = moment(this.form.date).format('YYYY-MM-DD');
-            //         result   = (this.stateRestData && this.stateRestData[ date ]) || [];
-            //     }
-            //     return result;
-            // },
             dialogStatus: {
                 get() {
                     return this.dialogFormVisible;
@@ -496,7 +510,7 @@
 
             async handleFormRest(date) {
                 this.formDateLoading = true;
-                this.formRests       = await this.getRestOfData({ date });
+                await this.getRestOfData({ date });
                 this.formDateLoading = false;
             },
             loadInto(duration = 250) {
@@ -537,12 +551,12 @@
                 this.handleGetReservation(this.dateTime);
             },
             async handleGetReservation(date) {
-                this.loadingText     = '正在加载当天预约信息..';
-                this.reservationData = await this.reservationDateData({ date });
+                this.loadingText = '正在加载当天预约信息..';
+                await this.reservationDateData({ date });
             },
             async handleGetRest(date) {
                 this.loadingText = '正在加载当天医生休息情况..';
-                this.restDate    = await this.getRestOfData({ date });
+                await this.getRestOfData({ date });
             },
             async handleSearch() {
                 !this.loading && (this.loading = true);

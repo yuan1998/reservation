@@ -96943,10 +96943,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
 /* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_assets__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/assets */ "./resources/js/utils/assets.js");
-/* harmony import */ var _api_request__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../api/request */ "./resources/js/api/request.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utils_assets__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/assets */ "./resources/js/utils/assets.js");
+/* harmony import */ var _api_request__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../api/request */ "./resources/js/api/request.js");
+
 
 
 
@@ -96982,7 +96985,7 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
       });
     },
     changeReservationOfId: function changeReservationOfId(state, data) {
-      var date = moment__WEBPACK_IMPORTED_MODULE_3___default()(data.date).format(format);
+      var date = moment__WEBPACK_IMPORTED_MODULE_4___default()(data.date).format(format);
 
       if (!state.dateData[date]) {
         return;
@@ -96999,7 +97002,7 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     removeReservation: function removeReservation(state, _ref) {
       var id = _ref.id,
           date = _ref.date;
-      date = moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format(format);
+      date = moment__WEBPACK_IMPORTED_MODULE_4___default()(date).format(format);
       var items = state.dateData[date];
 
       if (!items) {
@@ -97013,11 +97016,10 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     reservationDate: function reservationDate(state, _ref2) {
       var date = _ref2.date,
           data = _ref2.data;
-      state.dateData[date] = data;
+      vue__WEBPACK_IMPORTED_MODULE_3___default.a.set(state.dateData, date, data); // state.dateData[ date ] = data;
     },
     addDateReservation: function addDateReservation(state, data) {
-      var date = moment__WEBPACK_IMPORTED_MODULE_3___default()(data.date).format(format);
-      console.log('state.dateData[ date ] :', state.dateData[date]);
+      var date = moment__WEBPACK_IMPORTED_MODULE_4___default()(data.date).format(format);
 
       if (!state.dateData[date]) {
         return;
@@ -97046,7 +97048,7 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
               case 0:
                 state = _ref4.state, dispatch = _ref4.dispatch;
                 date = _ref5.date, strict = _ref5.strict;
-                date = moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format(format);
+                date = moment__WEBPACK_IMPORTED_MODULE_4___default()(date).format(format);
                 data = state.dateData[date];
 
                 if (!(!data || strict)) {
@@ -97090,11 +97092,11 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
                 data = {
                   date: date
                 };
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('RESERVATION_INDEX', {
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_INDEX', {
                   data: data
                 });
                 _context2.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 5:
                 res = _context2.sent;
@@ -97132,11 +97134,11 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
             switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref7.commit;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('RESERVATION_INDEX', {
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_INDEX', {
                   data: data
                 });
                 _context3.next = 4;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 4:
                 res = _context3.sent;
@@ -97171,13 +97173,13 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
             switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref8.commit;
-                data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["fitlerObjectOfArray"])(data, fields);
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('RESERVATION_UPDATE', {
+                data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["fitlerObjectOfArray"])(data, fields);
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_UPDATE', {
                   data: data
                 });
                 options.url = "".concat(options.url).concat(data.id);
                 _context4.next = 6;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 6:
                 res = _context4.sent;
@@ -97212,12 +97214,12 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
             switch (_context5.prev = _context5.next) {
               case 0:
                 commit = _ref9.commit;
-                data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["fitlerObjectOfArray"])(data, fields);
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('RESERVATION_CREATE', {
+                data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["fitlerObjectOfArray"])(data, fields);
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_CREATE', {
                   data: data
                 });
                 _context5.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 5:
                 res = _context5.sent;
@@ -97253,10 +97255,10 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
               case 0:
                 commit = _ref10.commit;
                 id = _ref11.id, date = _ref11.date;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('RESERVATION_DELETE');
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_DELETE');
                 options.url = "".concat(options.url).concat(id);
                 _context6.next = 6;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 6:
                 res = _context6.sent;
@@ -97297,14 +97299,14 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
             switch (_context7.prev = _context7.next) {
               case 0:
                 date = _args7.length > 1 && _args7[1] !== undefined ? _args7[1] : null;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('RESERVATION_COUNT');
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_COUNT');
 
                 if (date) {
                   options.url = "".concat(options.url, "?date=").concat(date);
                 }
 
                 _context7.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 5:
                 res = _context7.sent;
@@ -97344,10 +97346,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
 /* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_assets__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/assets */ "./resources/js/utils/assets.js");
-/* harmony import */ var _api_request__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../api/request */ "./resources/js/api/request.js");
-/* harmony import */ var moment_moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment/moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment_moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment_moment__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_assets__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/assets */ "./resources/js/utils/assets.js");
+/* harmony import */ var _api_request__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../api/request */ "./resources/js/api/request.js");
+/* harmony import */ var moment_moment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! moment/moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment_moment__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(moment_moment__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -97365,7 +97370,7 @@ var parseItem = function parseItem(item) {
 };
 
 var formtDate = function formtDate(date) {
-  return moment_moment__WEBPACK_IMPORTED_MODULE_5___default()(date).format('YYYY-MM-DD');
+  return moment_moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('YYYY-MM-DD');
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -97382,7 +97387,7 @@ var formtDate = function formtDate(date) {
     restDataAdd: function restDataAdd(state, _ref) {
       var data = _ref.data,
           date = _ref.date;
-      state.restData[date] = data;
+      vue__WEBPACK_IMPORTED_MODULE_3___default.a.set(state.restData, date, data);
     },
     restsDateTime: function restsDateTime(state, data) {
       state.restDateTime = data;
@@ -97403,9 +97408,10 @@ var formtDate = function formtDate(date) {
     restData: function restData(state, _ref2) {
       var date = _ref2.date,
           data = _ref2.data;
-      state.restDate[date] = data.map(function (item) {
+      data = data.map(function (item) {
         return parseItem(item);
       });
+      vue__WEBPACK_IMPORTED_MODULE_3___default.a.set(state.restData, date, data);
     },
     changeRestOfId: function changeRestOfId(state, data) {
       var index = state.rests.findIndex(function (item) {
@@ -97417,7 +97423,7 @@ var formtDate = function formtDate(date) {
       }
     },
     addRest: function addRest(state, data) {
-      var date = moment_moment__WEBPACK_IMPORTED_MODULE_5___default()(data.date).format('YYYY-MM-DD');
+      var date = moment_moment__WEBPACK_IMPORTED_MODULE_6___default()(data.date).format('YYYY-MM-DD');
 
       if (!state.restData[date]) {
         return;
@@ -97473,7 +97479,7 @@ var formtDate = function formtDate(date) {
               case 0:
                 dispatch = _ref6.dispatch, state = _ref6.state;
                 date = _ref7.date, strict = _ref7.strict;
-                date = moment_moment__WEBPACK_IMPORTED_MODULE_5___default()(date).format("YYYY-MM-DD");
+                date = moment_moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format("YYYY-MM-DD");
                 data = state.restData[date];
 
                 if (!(!data || strict)) {
@@ -97517,11 +97523,11 @@ var formtDate = function formtDate(date) {
                 data = {
                   date: date
                 };
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_3__["mergeApi"])('REST_INDEX', {
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('REST_INDEX', {
                   data: data
                 });
                 _context2.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 5:
                 res = _context2.sent;
@@ -97560,11 +97566,11 @@ var formtDate = function formtDate(date) {
               case 0:
                 commit = _ref9.commit;
                 type = _ref10.type, data = _ref10.data;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_3__["mergeApi"])('REST_INDEX', {
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('REST_INDEX', {
                   data: data
                 });
                 _context3.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 5:
                 res = _context3.sent;
@@ -97601,12 +97607,12 @@ var formtDate = function formtDate(date) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref11.commit;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_3__["mergeApi"])('REST_UPDATE', {
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('REST_UPDATE', {
                   data: data
                 });
                 options.url = "".concat(options.url).concat(data.id);
                 _context4.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 5:
                 res = _context4.sent;
@@ -97644,11 +97650,11 @@ var formtDate = function formtDate(date) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 commit = _ref12.commit;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_3__["mergeApi"])('REST_CREATE', {
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('REST_CREATE', {
                   data: data
                 });
                 _context5.next = 4;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 4:
                 res = _context5.sent;
@@ -97687,10 +97693,10 @@ var formtDate = function formtDate(date) {
               case 0:
                 commit = _ref13.commit;
                 id = _ref14.id, date = _ref14.date;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_3__["mergeApi"])('REST_DELETE');
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_4__["mergeApi"])('REST_DELETE');
                 options.url = "".concat(options.url).concat(id);
                 _context6.next = 6;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 6:
                 res = _context6.sent;

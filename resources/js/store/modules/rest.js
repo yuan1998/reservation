@@ -1,3 +1,4 @@
+import Vue                            from 'vue';
 import { idToArray, mergeApi, oneOf } from "../../utils/assets";
 import { authRequest }                from "../../api/request";
 import moment                         from "moment/moment";
@@ -31,7 +32,7 @@ export default {
     },
     mutations : {
         restDataAdd(state, { data, date }) {
-            state.restData[ date ] = data;
+            Vue.set(state.restData, date, data);
         },
         restsDateTime(state, data) {
             state.restDateTime = data;
@@ -51,9 +52,11 @@ export default {
         },
 
         restData(state, { date, data }) {
-            state.restDate[ date ] = data.map((item) => {
+            data =  data.map((item) => {
                 return parseItem(item);
             });
+            Vue.set(state.restData, date, data);
+
         },
         changeRestOfId(state, data) {
             let index = state.rests.findIndex((item) => item.id === data.id);
@@ -75,7 +78,6 @@ export default {
                 return;
             }
             state.restData[ date ] = item.filter((e) => e.id !== id);
-
         }
     },
     getters   : {
