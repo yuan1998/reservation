@@ -774,9 +774,9 @@ var defaultForm = {
       },
       submitLoading: false,
       formDateLoading: false,
-      projects: [],
-      experts: [],
-      timelines: [],
+      // projects         : [],
+      // experts          : [],
+      // timelines        : [],
       restDate: [],
       reservationData: [],
       formRests: []
@@ -785,7 +785,41 @@ var defaultForm = {
   mounted: function mounted() {
     this.handleInit();
   },
-  computed: {
+  computed: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
+    stateRestData: function stateRestData(state) {
+      return state.Rest.restData;
+    },
+    timelines: function timelines(state) {
+      return state.Timeline.timelines || [];
+    },
+    projects: function projects(state) {
+      return state.Project.projects || [];
+    },
+    experts: function experts(state) {
+      return state.Expert.allExperts || [];
+    },
+    stateReservationData: function stateReservationData(state) {
+      return state.Reservation.dateData;
+    }
+  }), {
+    // reservationData: {
+    //     get() {
+    //         let date = moment(this.dateTime).format('YYYY-MM-DD');
+    //         return (this.stateReservationData && this.stateReservationData[ date ]) || [];
+    //     }
+    // },
+    // restDate() {
+    //     let date = moment(this.dateTime).format('YYYY-MM-DD');
+    //     return (this.stateRestData && this.stateRestData[ date ]) || [];
+    // },
+    // formRests() {
+    //     let result = [];
+    //     if (this.form && this.form.date) {
+    //         let date = moment(this.form.date).format('YYYY-MM-DD');
+    //         result   = (this.stateRestData && this.stateRestData[ date ]) || [];
+    //     }
+    //     return result;
+    // },
     dialogStatus: {
       get: function get() {
         return this.dialogFormVisible;
@@ -899,7 +933,7 @@ var defaultForm = {
         return item.id === _this4.project;
       });
     }
-  },
+  }),
   methods: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])({
     // 获取 预约
     reservationDateData: 'Reservation/reservationDateData',
@@ -923,16 +957,11 @@ var defaultForm = {
         return item.id === id;
       });
     },
-    getRestOfDate: function getRestOfDate(date) {
-      return this.restDate[date];
-    },
     handleGetFormDateRestId: function handleGetFormDateRestId(a, b) {
       var id;
 
       if (a === 'timeline_id') {
-        var item = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["hasTime"])(this.form.date); // this.hasTime(this.form.date);
-
-        console.log('item :', item);
+        var item = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["hasTime"])(this.form.date);
         id = item ? item.id : 0;
       } else {
         id = this.form[a];
@@ -1068,26 +1097,23 @@ var defaultForm = {
                 return this.getTimeline();
 
               case 4:
-                this.timelines = _context3.sent;
                 this.loadingText = '正在加载项目..';
-                _context3.next = 8;
+                _context3.next = 7;
                 return this.getProject();
 
-              case 8:
-                this.projects = _context3.sent;
+              case 7:
                 this.loadingText = '正在加载医生..';
-                _context3.next = 12;
+                _context3.next = 10;
                 return this.getExpert();
 
-              case 12:
-                this.experts = _context3.sent;
-                _context3.next = 15;
+              case 10:
+                _context3.next = 12;
                 return this.handleDateInfo();
 
-              case 15:
+              case 12:
                 this.loading = false;
 
-              case 16:
+              case 13:
               case "end":
                 return _context3.stop();
             }
@@ -1264,7 +1290,7 @@ var defaultForm = {
               switch (_context9.prev = _context9.next) {
                 case 0:
                   if (!valid) {
-                    _context9.next = 11;
+                    _context9.next = 12;
                     break;
                   }
 
@@ -1290,7 +1316,9 @@ var defaultForm = {
                   _this6.submitLoading = false;
                   _this6.dialogStatus = false;
 
-                case 11:
+                  _this6.handleDateInfo();
+
+                case 12:
                 case "end":
                   return _context9.stop();
               }
@@ -1312,7 +1340,6 @@ var defaultForm = {
             switch (_context10.prev = _context10.next) {
               case 0:
                 if (value && !this.loading) {
-                  // this.$router.replace({ query: { ...this.$route.query, date: this.dateTime } });
                   this.handleInit();
                 }
 
@@ -1674,7 +1701,9 @@ var render = function() {
                             _c("div", { staticClass: "item-text" }, [
                               _vm._v(
                                 "\n                            " +
-                                  _vm._s(each.createdBy.name) +
+                                  _vm._s(
+                                    each.createdBy ? each.createdBy.name : "无"
+                                  ) +
                                   "\n                        "
                               )
                             ])
@@ -1687,7 +1716,11 @@ var render = function() {
                               _c("div", { staticClass: "item-text" }, [
                                 _vm._v(
                                   "\n                            " +
-                                    _vm._s(each.updatedBy.name) +
+                                    _vm._s(
+                                      each.updatedBy
+                                        ? each.updatedBy.name
+                                        : "无"
+                                    ) +
                                     "\n                        "
                                 )
                               ])
@@ -1850,8 +1883,7 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 return _vm.handleReservation("new", {
-                                  expert_id: _vm.item.id,
-                                  timeline_id: _vm.id
+                                  expert_id: _vm.item.id
                                 })
                               }
                             }

@@ -304,8 +304,8 @@ var defaultForm = {
           trigger: 'blur'
         }]
       },
-      submitLoading: false,
-      projects: []
+      submitLoading: false // projects         : [],
+
     };
   },
   mounted: function () {
@@ -337,17 +337,14 @@ var defaultForm = {
       return state.total;
     },
     experts: function experts(state) {
-      return state.experts;
+      return state.allExperts;
     },
     pageIndex: function pageIndex(state) {
       return state.pageIndex;
     }
+  }), Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
+    displayProject: 'Project/displayProject'
   }), {
-    displayProject: function displayProject() {
-      return this.projects.filter(function (e) {
-        return e.display;
-      });
-    },
     dialogStatus: {
       get: function get() {
         return this.dialogFormVisible;
@@ -379,11 +376,7 @@ var defaultForm = {
       };
     }
   }),
-  methods: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({
-    testHandle: function testHandle(item) {
-      console.log('item :', item);
-    }
-  }, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])({
+  methods: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])({
     getExperts: 'Expert/getExperts',
     getProjects: 'Project/getProject',
     createExpert: 'Expert/createExpert',
@@ -459,14 +452,12 @@ var defaultForm = {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                this.loadingText = '项目计算中...';
+                this.loadingText = '项目计算中...'; // this.projects    =
+
                 _context4.next = 3;
                 return this.getProjects();
 
               case 3:
-                this.projects = _context4.sent;
-
-              case 4:
               case "end":
                 return _context4.stop();
             }

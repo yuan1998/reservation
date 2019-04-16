@@ -282,11 +282,15 @@ var defaultForm = {
       },
       submitLoading: false,
       showSaveButton: false,
-      saveButtonLoading: false,
-      timelines: []
+      saveButtonLoading: false // timelines        : [],
+
     };
   },
-  computed: {
+  computed: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
+    timelines: function timelines(state) {
+      return state.Timeline.timelines || [];
+    }
+  }), {
     dialogStatus: {
       get: function get() {
         return this.dialogFormVisible;
@@ -314,9 +318,8 @@ var defaultForm = {
         destroy: this.$hasPermission('timeline:destroy')
       };
     }
-  },
+  }),
   mounted: function mounted() {
-    console.log('this.timelines :', this.timelines);
     this.handleGetTimeline();
   },
   methods: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapMutations"])({
@@ -337,15 +340,15 @@ var defaultForm = {
             switch (_context.prev = _context.next) {
               case 0:
                 !this.loading && (this.loading = true);
-                this.loadingText = '穿梭时空间隙中...';
+                this.loadingText = '穿梭时空间隙中...'; // this.timelines   =
+
                 _context.next = 4;
                 return this.getTimelines();
 
               case 4:
-                this.timelines = _context.sent;
                 this.loading = false;
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }

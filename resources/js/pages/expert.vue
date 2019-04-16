@@ -41,7 +41,7 @@
                             label="操作"
                             align="right">
                         <template slot-scope="scope">
-                            <div >
+                            <div>
                                 <el-button
                                         v-if="expertPermission.update"
                                         size="mini"
@@ -185,7 +185,7 @@
                     ],
                 },
                 submitLoading    : false,
-                projects         : [],
+                // projects         : [],
             }
         },
         async mounted() {
@@ -194,12 +194,12 @@
         computed  : {
             ...mapState('Expert', {
                 total    : state => state.total,
-                experts  : state => state.experts,
+                experts  : state => state.allExperts,
                 pageIndex: state => state.pageIndex,
             }),
-            displayProject() {
-                return this.projects.filter(e => e.display);
-            },
+            ...mapGetters({
+                displayProject: 'Project/displayProject',
+            }),
             dialogStatus: {
                 get() {
                     return this.dialogFormVisible;
@@ -231,9 +231,6 @@
             }
         },
         methods   : {
-            testHandle(item) {
-                console.log('item :', item);
-            },
             ...mapActions({
                 getExperts  : 'Expert/getExperts',
                 getProjects : 'Project/getProject',
@@ -256,7 +253,8 @@
             },
             async handleGetProjects() {
                 this.loadingText = '项目计算中...';
-                this.projects    = await this.getProjects();
+                // this.projects    =
+                await this.getProjects();
             },
             handleChange(value, type, key) {
             },

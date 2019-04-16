@@ -97017,6 +97017,7 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     },
     addDateReservation: function addDateReservation(state, data) {
       var date = moment__WEBPACK_IMPORTED_MODULE_3___default()(data.date).format(format);
+      console.log('state.dateData[ date ] :', state.dateData[date]);
 
       if (!state.dateData[date]) {
         return;

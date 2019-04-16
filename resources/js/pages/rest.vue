@@ -285,9 +285,9 @@
                 },
                 submitLoading    : false,
                 formDateLoading  : false,
-                projects         : [],
-                experts          : [],
-                timelines        : [],
+                // projects         : [],
+                // experts          : [],
+                // timelines        : [],
                 restDate         : [],
                 reservationData  : [],
                 formRests        : [],
@@ -297,6 +297,37 @@
             this.handleInit();
         },
         computed  : {
+            ...mapState({
+                stateRestData       : state => state.Rest.restData,
+                timelines           : state => {
+                    return state.Timeline.timelines || [];
+                },
+                projects            : state => {
+                    return state.Project.projects || [];
+                },
+                experts             : state => {
+                    return state.Expert.allExperts || [];
+                },
+                stateReservationData: state => state.Reservation.dateData
+            }),
+            // reservationData: {
+            //     get() {
+            //         let date = moment(this.dateTime).format('YYYY-MM-DD');
+            //         return (this.stateReservationData && this.stateReservationData[ date ]) || [];
+            //     }
+            // },
+            // restDate() {
+            //     let date = moment(this.dateTime).format('YYYY-MM-DD');
+            //     return (this.stateRestData && this.stateRestData[ date ]) || [];
+            // },
+            // formRests() {
+            //     let result = [];
+            //     if (this.form && this.form.date) {
+            //         let date = moment(this.form.date).format('YYYY-MM-DD');
+            //         result   = (this.stateRestData && this.stateRestData[ date ]) || [];
+            //     }
+            //     return result;
+            // },
             dialogStatus: {
                 get() {
                     return this.dialogFormVisible;
@@ -353,7 +384,6 @@
                         return item.id === id;
                     });
                 }
-
                 return result;
             },
             formExpert() {
@@ -418,16 +448,11 @@
                 }
                 return this.experts.find((item) => item.id === id);
             },
-            getRestOfDate(date) {
-                return this.restDate[ date ];
-            },
             handleGetFormDateRestId(a, b) {
                 let id;
                 if (a === 'timeline_id') {
                     let item = hasTime(this.form.date);
-                    // this.hasTime(this.form.date);
-                    console.log('item :', item);
-                    id = item ? item.id : 0;
+                    id       = item ? item.id : 0;
                 }
                 else {
                     id = this.form[ a ];
@@ -493,16 +518,15 @@
             async handleInit() {
                 !this.loading && (this.loading = true);
                 this.loadingText = '正在加载时间段..';
-                this.timelines   = await this.getTimeline();
+                await this.getTimeline();
                 this.loadingText = '正在加载项目..';
-                this.projects    = await this.getProject();
+                await this.getProject();
                 this.loadingText = '正在加载医生..';
-                this.experts     = await this.getExpert();
+                await this.getExpert();
                 await this.handleDateInfo();
                 this.loading = false;
             },
             async handleDateInfo() {
-
                 await this.handleGetReservation(this.dateTime);
                 await this.handleGetRest(this.dateTime);
             },
@@ -537,12 +561,12 @@
                         this.dialogType === 'new' ? await this.handleNewReservation() : await this.handleChangeReservation();
                         this.submitLoading = false;
                         this.dialogStatus  = false;
+                        this.handleDateInfo();
                     }
                 })
             },
             async handleDateTimeChange(value) {
                 if (value && !this.loading) {
-                    // this.$router.replace({ query: { ...this.$route.query, date: this.dateTime } });
                     this.handleInit();
                 }
             },

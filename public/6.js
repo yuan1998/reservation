@@ -327,12 +327,12 @@ var defaultForm = {
                 !this.loading && (this.loading = true);
                 this.loadingText = '获取机密中..';
                 _context.next = 4;
-                return this.handleGetRoles();
+                return this.handleGetRoles(true);
 
               case 4:
                 this.loadingText = '解析机密中..';
                 _context.next = 7;
-                return this.handleGetPermission();
+                return this.handleGetPermission(true);
 
               case 7:
                 this.loading = false;
@@ -355,17 +355,20 @@ var defaultForm = {
       var _handleGetRoles = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var strict,
+            _args2 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return this.getRoles();
-
-              case 2:
-                this.roles = _context2.sent;
+                strict = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : false;
+                _context2.next = 3;
+                return this.getRoles(strict);
 
               case 3:
+                this.roles = _context2.sent;
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -383,17 +386,20 @@ var defaultForm = {
       var _handleGetPermission = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var strict,
+            _args3 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
-                return this.getPermissions();
-
-              case 2:
-                this.permissions = _context3.sent;
+                strict = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : false;
+                _context3.next = 3;
+                return this.getPermissions(strict);
 
               case 3:
+                this.permissions = _context3.sent;
+
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -421,7 +427,6 @@ var defaultForm = {
 
       this.dialogType = type;
       this.form = Object.assign({}, defaultForm, item);
-      console.log('this.form.permissions :', this.form);
 
       if (this.form.permissions && this.form.permissions.length) {
         this.form.permissions = this.form.permissions.map(function (each) {
@@ -452,7 +457,7 @@ var defaultForm = {
               switch (_context4.prev = _context4.next) {
                 case 0:
                   if (!(valid && !_this2.submitLoading)) {
-                    _context4.next = 11;
+                    _context4.next = 13;
                     break;
                   }
 
@@ -477,8 +482,10 @@ var defaultForm = {
                 case 9:
                   _this2.submitLoading = false;
                   _this2.dialogStatus = false;
+                  _context4.next = 13;
+                  return _this2.handleGetRoles();
 
-                case 11:
+                case 13:
                 case "end":
                   return _context4.stop();
               }

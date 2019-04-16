@@ -165,7 +165,7 @@
                     ],
                 },
                 permissions      : [],
-                roles: [],
+                roles            : [],
             }
         },
         computed  : {
@@ -196,6 +196,7 @@
             this.handleInit();
         },
         methods   : {
+
             ...mapActions({
                 getPermissions: 'Permission/getPermissions',
                 getRoles      : 'Role/getRoles',
@@ -206,17 +207,16 @@
             async handleInit() {
                 !this.loading && (this.loading = true);
                 this.loadingText = '获取机密中..';
-                await this.handleGetRoles();
+                await this.handleGetRoles(true);
                 this.loadingText = '解析机密中..';
-                 await this.handleGetPermission();
+                await this.handleGetPermission(true);
                 this.loading = false;
             },
-            async handleGetRoles() {
-                this.roles = await this.getRoles();
+            async handleGetRoles(strict = false) {
+                this.roles = await this.getRoles(strict);
             },
-            async handleGetPermission() {
-                this.permissions = await this.getPermissions();
-                // console.log('res :', res);
+            async handleGetPermission(strict = false) {
+                this.permissions = await this.getPermissions(strict);
             },
             handleEdit(item = {}, type = 'new') {
                 if (this.permissions === null) {
@@ -231,7 +231,6 @@
 
                 this.form = Object.assign({}, defaultForm, item);
 
-                console.log('this.form.permissions :', this.form);
                 if (this.form.permissions && this.form.permissions.length) {
                     this.form.permissions = this.form.permissions.map((each) => {
                         return each.name;
@@ -253,6 +252,7 @@
                         this.dialogType === 'new' ? await this.handleCreate() : await this.handleUpdate();
                         this.submitLoading = false;
                         this.dialogStatus  = false;
+                        await this.handleGetRoles();
                     }
                 });
             },

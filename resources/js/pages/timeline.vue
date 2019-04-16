@@ -142,10 +142,15 @@
                 submitLoading    : false,
                 showSaveButton   : false,
                 saveButtonLoading: false,
-                timelines        : [],
+                // timelines        : [],
             }
         },
         computed  : {
+            ...mapState({
+                timelines: state => {
+                    return state.Timeline.timelines || [];
+                }
+            }),
             dialogStatus: {
                 get() {
                     return this.dialogFormVisible;
@@ -174,7 +179,6 @@
             }
         },
         mounted() {
-            console.log('this.timelines :', this.timelines);
             this.handleGetTimeline();
         },
         methods   : {
@@ -191,7 +195,8 @@
             async handleGetTimeline() {
                 !this.loading && (this.loading = true);
                 this.loadingText = '穿梭时空间隙中...';
-                this.timelines   = await this.getTimelines();
+                // this.timelines   =
+                await this.getTimelines();
                 this.loading     = false;
             },
             handleEdit(item = {}, type = 'new') {

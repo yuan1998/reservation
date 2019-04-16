@@ -52,12 +52,12 @@
                         </el-form-item>
                         <el-form-item label="创建人 :">
                             <div class="item-text">
-                                {{ each.createdBy.name }}
+                                {{ each.createdBy  ? each.createdBy.name : '无'}}
                             </div>
                         </el-form-item>
                         <el-form-item label="上次修改 :">
                             <div class="item-text">
-                                {{ each.updatedBy.name }}
+                                {{ each.updatedBy  ? each.updatedBy.name : '无'}}
                             </div>
                         </el-form-item>
 
@@ -113,7 +113,7 @@
                            size="small"
                            type="success"
                            icon="el-icon-plus"
-                           @click="handleReservation('new' , {expert_id:item.id , timeline_id : id})">
+                           @click="handleReservation('new' , {expert_id:item.id })">
                     预约
                 </el-button>
                 <el-button v-if="canRest"
@@ -189,9 +189,8 @@
                 });
 
                 if (this.project && this.project.id) {
-                    result = result[ this.project.id ] ? {[this.project.id] : result[ this.project.id ] } : {};
+                    result = result[ this.project.id ] ? { [ this.project.id ]: result[ this.project.id ] } : {};
                 }
-
                 return result;
             },
             reservationLength() {

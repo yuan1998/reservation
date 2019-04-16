@@ -47,6 +47,7 @@ class AuthController extends Controller
             ];
 
             $user = User::create($userValue);
+            $user->syncRoles('experience');
         }
 
         // 更新用户数据

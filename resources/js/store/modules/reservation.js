@@ -63,6 +63,7 @@ export default {
         },
         addDateReservation(state, data) {
             let date = moment(data.date).format(format);
+            console.log('state.dateData[ date ] :', state.dateData[ date ]);
             if (!state.dateData[ date ]) {
                 return;
             }
