@@ -77,6 +77,14 @@ export default {
         }
     },
     actions   : {
+        async phoneIsExists(_ , data) {
+            let options = mergeApi('RESERVATION_PHONE', { data });
+            let res     = await authRequest(options);
+            if (res.result) {
+                console.log('res:', res.data);
+            }
+            return res;
+        },
         async reservationDateData({ state, dispatch }, { date, strict }) {
             date     = moment(date).format(format);
             let data = state.dateData[ date ];

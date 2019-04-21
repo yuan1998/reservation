@@ -93291,6 +93291,11 @@ var API = {
     method: 'GET',
     status: 200
   },
+  RESERVATION_PHONE: {
+    url: 'reservation/phoneExists',
+    method: 'POST',
+    status: 200
+  },
   ACTIVITY_INDEX: {
     url: 'activity/',
     method: 'GET',
@@ -97037,35 +97042,31 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     }
   },
   actions: {
-    reservationDateData: function () {
-      var _reservationDateData = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    phoneIsExists: function () {
+      var _phoneIsExists = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref4, _ref5) {
-        var state, dispatch, date, strict, data;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_, data) {
+        var options, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                state = _ref4.state, dispatch = _ref4.dispatch;
-                date = _ref5.date, strict = _ref5.strict;
-                date = moment__WEBPACK_IMPORTED_MODULE_4___default()(date).format(format);
-                data = state.dateData[date];
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_PHONE', {
+                  data: data
+                });
+                _context.next = 3;
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
-                if (!(!data || strict)) {
-                  _context.next = 8;
-                  break;
+              case 3:
+                res = _context.sent;
+
+                if (res.result) {
+                  console.log('res:', res.data);
                 }
 
-                _context.next = 7;
-                return dispatch('reservationDate', date);
+                return _context.abrupt("return", res);
 
-              case 7:
-                data = state.dateData[date];
-
-              case 8:
-                return _context.abrupt("return", data || []);
-
-              case 9:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -97073,7 +97074,49 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
         }, _callee);
       }));
 
-      function reservationDateData(_x, _x2) {
+      function phoneIsExists(_x, _x2) {
+        return _phoneIsExists.apply(this, arguments);
+      }
+
+      return phoneIsExists;
+    }(),
+    reservationDateData: function () {
+      var _reservationDateData = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref4, _ref5) {
+        var state, dispatch, date, strict, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                state = _ref4.state, dispatch = _ref4.dispatch;
+                date = _ref5.date, strict = _ref5.strict;
+                date = moment__WEBPACK_IMPORTED_MODULE_4___default()(date).format(format);
+                data = state.dateData[date];
+
+                if (!(!data || strict)) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                _context2.next = 7;
+                return dispatch('reservationDate', date);
+
+              case 7:
+                data = state.dateData[date];
+
+              case 8:
+                return _context2.abrupt("return", data || []);
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function reservationDateData(_x3, _x4) {
         return _reservationDateData.apply(this, arguments);
       }
 
@@ -97082,11 +97125,11 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     reservationDate: function () {
       var _reservationDate = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref6, date) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref6, date) {
         var commit, data, options, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref6.commit;
                 data = {
@@ -97095,11 +97138,11 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
                 options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_INDEX', {
                   data: data
                 });
-                _context2.next = 5;
+                _context3.next = 5;
                 return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 5:
-                res = _context2.sent;
+                res = _context3.sent;
 
                 if (res.result) {
                   commit('reservationDate', {
@@ -97108,17 +97151,17 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
                   });
                 }
 
-                return _context2.abrupt("return", res);
+                return _context3.abrupt("return", res);
 
               case 8:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }));
 
-      function reservationDate(_x3, _x4) {
+      function reservationDate(_x5, _x6) {
         return _reservationDate.apply(this, arguments);
       }
 
@@ -97127,37 +97170,37 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     reservations: function () {
       var _reservations = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref7, data) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref7, data) {
         var commit, options, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref7.commit;
                 options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_INDEX', {
                   data: data
                 });
-                _context3.next = 4;
+                _context4.next = 4;
                 return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 4:
-                res = _context3.sent;
+                res = _context4.sent;
 
                 if (res.result) {
                   commit('reservations', res.data);
                 }
 
-                return _context3.abrupt("return", res);
+                return _context4.abrupt("return", res);
 
               case 7:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }));
 
-      function reservations(_x5, _x6) {
+      function reservations(_x7, _x8) {
         return _reservations.apply(this, arguments);
       }
 
@@ -97166,11 +97209,11 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     updateReservation: function () {
       var _updateReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref8, data) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref8, data) {
         var commit, options, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 commit = _ref8.commit;
                 data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["fitlerObjectOfArray"])(data, fields);
@@ -97178,27 +97221,27 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
                   data: data
                 });
                 options.url = "".concat(options.url).concat(data.id);
-                _context4.next = 6;
+                _context5.next = 6;
                 return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 6:
-                res = _context4.sent;
+                res = _context5.sent;
 
                 if (res.result) {
                   commit('changeReservationOfId', res.data);
                 }
 
-                return _context4.abrupt("return", res);
+                return _context5.abrupt("return", res);
 
               case 9:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4);
+        }, _callee5);
       }));
 
-      function updateReservation(_x7, _x8) {
+      function updateReservation(_x9, _x10) {
         return _updateReservation.apply(this, arguments);
       }
 
@@ -97207,38 +97250,38 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     addDateReservation: function () {
       var _addDateReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref9, data) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref9, data) {
         var commit, options, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 commit = _ref9.commit;
                 data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["fitlerObjectOfArray"])(data, fields);
                 options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_CREATE', {
                   data: data
                 });
-                _context5.next = 5;
+                _context6.next = 5;
                 return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 5:
-                res = _context5.sent;
+                res = _context6.sent;
 
                 if (res.result) {
                   commit('addDateReservation', res.data);
                 }
 
-                return _context5.abrupt("return", res);
+                return _context6.abrupt("return", res);
 
               case 8:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5);
+        }, _callee6);
       }));
 
-      function addDateReservation(_x9, _x10) {
+      function addDateReservation(_x11, _x12) {
         return _addDateReservation.apply(this, arguments);
       }
 
@@ -97247,21 +97290,21 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     deleteReservation: function () {
       var _deleteReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref10, _ref11) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(_ref10, _ref11) {
         var commit, id, date, options, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 commit = _ref10.commit;
                 id = _ref11.id, date = _ref11.date;
                 options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_DELETE');
                 options.url = "".concat(options.url).concat(id);
-                _context6.next = 6;
+                _context7.next = 6;
                 return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 6:
-                res = _context6.sent;
+                res = _context7.sent;
 
                 if (res.result) {
                   commit('removeReservation', {
@@ -97270,17 +97313,17 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
                   });
                 }
 
-                return _context6.abrupt("return", res);
+                return _context7.abrupt("return", res);
 
               case 9:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6);
+        }, _callee7);
       }));
 
-      function deleteReservation(_x11, _x12) {
+      function deleteReservation(_x13, _x14) {
         return _deleteReservation.apply(this, arguments);
       }
 
@@ -97289,38 +97332,38 @@ var fields = ['age', 'date', 'description', 'expert_id', 'id', 'name', 'phone', 
     getCount: function () {
       var _getCount = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(_) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_) {
         var date,
             options,
             res,
-            _args7 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+            _args8 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                date = _args7.length > 1 && _args7[1] !== undefined ? _args7[1] : null;
+                date = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : null;
                 options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('RESERVATION_COUNT');
 
                 if (date) {
                   options.url = "".concat(options.url, "?date=").concat(date);
                 }
 
-                _context7.next = 5;
+                _context8.next = 5;
                 return Object(_api_request__WEBPACK_IMPORTED_MODULE_6__["authRequest"])(options);
 
               case 5:
-                res = _context7.sent;
-                return _context7.abrupt("return", res);
+                res = _context8.sent;
+                return _context8.abrupt("return", res);
 
               case 7:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7);
+        }, _callee8);
       }));
 
-      function getCount(_x13) {
+      function getCount(_x15) {
         return _getCount.apply(this, arguments);
       }
 
@@ -98310,9 +98353,15 @@ var defaultValue = {
 var format = 'HH:mm';
 
 var parseItem = function parseItem(item) {
+  var bt = moment__WEBPACK_IMPORTED_MODULE_3___default()(item.begin_time, 'YYYY-MM-DD HH:mm:ss');
+  var et = moment__WEBPACK_IMPORTED_MODULE_3___default()(item.end_time, 'YYYY-MM-DD HH:mm:ss');
+  var btText = bt.format(format);
+  var etText = et.format(format);
   return _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, defaultValue, item, {
-    beginTime: moment__WEBPACK_IMPORTED_MODULE_3___default()(item.begin_time, 'YYYY-MM-DD HH:mm:ss').format(format),
-    endTime: moment__WEBPACK_IMPORTED_MODULE_3___default()(item.end_time, 'YYYY-MM-DD HH:mm:ss').format(format)
+    beginTime: btText,
+    endTime: etText,
+    beginInt: Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["timeToInt"])(btText),
+    endInt: Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["timeToInt"])(etText)
   });
 };
 
@@ -98842,7 +98891,7 @@ var defaultValue = {
 /*!**************************************!*\
   !*** ./resources/js/utils/assets.js ***!
   \**************************************/
-/*! exports provided: oneOf, cloneOf, getAuthToken, setAuthToken, clearAuth, mergeApi, mergeOf, hasPermission, pluckOf, responseNotify, filterResponseMessage, flattenDeep, isNumeric, idToArray, dateTimeToTime, hasTime, fitlerObjectOfArray */
+/*! exports provided: oneOf, cloneOf, getAuthToken, setAuthToken, clearAuth, mergeApi, mergeOf, hasPermission, pluckOf, responseNotify, filterResponseMessage, flattenDeep, isNumeric, idToArray, dateTimeToTime, timeToInt, hasTime, fitlerObjectOfArray */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98862,6 +98911,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isNumeric", function() { return isNumeric; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "idToArray", function() { return idToArray; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dateTimeToTime", function() { return dateTimeToTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "timeToInt", function() { return timeToInt; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasTime", function() { return hasTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fitlerObjectOfArray", function() { return fitlerObjectOfArray; });
 /* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
@@ -99016,14 +99066,15 @@ var dateTimeToTime = function dateTimeToTime(date) {
 
   return moment__WEBPACK_IMPORTED_MODULE_1___default()(moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('HH:mm'), 'HH:mm');
 };
+var timeToInt = function timeToInt(time) {
+  return parseInt(time.replace(':', ''));
+};
 var format = 'HH:mm';
 var hasTime = function hasTime(time) {
   var timelines = _store__WEBPACK_IMPORTED_MODULE_4__["default"].state.Timeline.timelines;
-  time = dateTimeToTime(time);
+  time = timeToInt(moment__WEBPACK_IMPORTED_MODULE_1___default()(time).format(format));
   return timelines.find(function (each) {
-    var bt = moment__WEBPACK_IMPORTED_MODULE_1___default()(each.beginTime, format);
-    var et = moment__WEBPACK_IMPORTED_MODULE_1___default()(each.endTime, format);
-    return time.isBefore(et) && time.isSameOrAfter(bt);
+    return each.beginInt <= time && time < each.endInt;
   });
 };
 var fitlerObjectOfArray = function fitlerObjectOfArray(obj, arr) {

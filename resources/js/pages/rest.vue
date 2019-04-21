@@ -70,15 +70,23 @@
                              ref="form"
                              :rules="editRule">
                         <el-form-item label="客户姓名" prop="name" :label-width="formLabelWidth">
-                            <el-input v-model="form.name" placeholder="姓名" autocomplete="off"></el-input>
+                            <el-input v-model="form.name"
+                                      placeholder="请输入姓名"
+                                      autocomplete="off"/>
                         </el-form-item>
                         <el-form-item label="年龄" prop="age" :label-width="formLabelWidth">
-                            <el-input type="number" v-model="form.age" placeholder="年龄" autocomplete="off"></el-input>
+                            <el-input type="number"
+                                      v-model="form.age"
+                                      placeholder="请输入年龄"
+                                      autocomplete="off"/>
                         </el-form-item>
                         <el-form-item label="电话" prop="phone" :label-width="formLabelWidth">
-                            <el-input type="number" v-model="form.phone" placeholder="" autocomplete="off"></el-input>
+                            <el-input type="number"
+                                      :suffix-icon="phoneInputLoading ? 'el-icon-loading': ''"
+                                      v-model="form.phone"
+                                      placeholder="请输入电话号码"
+                                      autocomplete="off"/>
                         </el-form-item>
-
                         <el-form-item label="性别" prop="sex" :label-width="formLabelWidth">
                             <el-radio-group v-model="form.sex">
                                 <el-radio-button label="男"></el-radio-button>
@@ -158,7 +166,6 @@
                         <el-button @click="dialogStatus = false">
                             取 消
                         </el-button>
-
                     </div>
                 </el-dialog>
             </div>
@@ -172,14 +179,15 @@
     import MyColumn                                           from '../components/admin/reseravtion-column';
     import { oneOf, responseNotify, hasTime }                 from "../utils/assets";
 
-    const today       = moment().format('YYYY-MM-DD');
+    const today = moment().format('YYYY-MM-DD');
+    console.log('today :', today);
     const defaultForm = {
         name       : '',
         age        : '',
         phone      : '',
         sex        : '女',
         description: "",
-        remark     : '',
+        remark     : undefined,
         timeline_id: '',
         project_id : '',
         expert_id  : '',
@@ -204,20 +212,35 @@
             }
         },
         data() {
-            const validatePhone = (rule, value, callback) => {
+            const validatePhone = async (rule, value, callback) => {
                 if (!value) {
                     callback(new Error('电话不能为空'));
                 }
                 else {
                     if (!/^1[34578]\d{9}$/.test(value)) {
                         callback('请输入正确的电话号码');
-
                     } else {
+                        this.phoneExists();
                         callback();
                     }
                 }
             };
-            let dateTime        = this.$route.query.date || today;
+
+            const validateDate = async (rule, value, callback) => {
+                if (!value) {
+                    callback(new Error('日期不能为空'));
+                }
+                else {
+                    if (hasTime(value)) {
+                        callback();
+                    }
+                    else {
+                        callback('这个时间不上班');
+                    }
+                }
+            };
+
+            let dateTime = this.$route.query.date || today;
 
             return {
                 dateTime,
@@ -261,13 +284,14 @@
                     ],
                     phone      : [
                         { required: true, message: '请输入电话号码', trigger: 'blur' },
-                        { validator: validatePhone, trigger: 'blur' }
+                        { validator: validatePhone, trigger: 'blur' },
                     ],
                     sex        : [
                         { required: true, message: '请选择性别', trigger: 'blur' },
                     ],
                     date       : [
                         { required: true, message: '请选择日期', trigger: 'blur' },
+                        { validator: validateDate, trigger: 'blur' },
                     ],
                     timeline_id: [
                         { required: true, message: '请选择时间', trigger: 'blur' },
@@ -284,6 +308,7 @@
                         { required: true, message: '请输入 名称', trigger: 'blur' },
                     ],
                 },
+                phoneInputLoading: false,
                 submitLoading    : false,
                 formDateLoading  : false,
                 // projects         : [],
@@ -444,6 +469,7 @@
             ...mapActions({
                 // 获取 预约
                 reservationDateData: 'Reservation/reservationDateData',
+                phoneIsExists      : 'Reservation/phoneIsExists',
                 // 获取医生 休息
                 getRestOfData      : 'Rest/getRestOfData',
                 // 获取 时间段
@@ -456,6 +482,29 @@
                 addDateReservation: 'Reservation/addDateReservation',
                 updateReservation : 'Reservation/updateReservation',
             }),
+            async phoneExists() {
+                let { date, phone, id } = this.form;
+                date                    = moment(date).format('YYYY-MM-DD');
+
+                this.phoneInputLoading = true;
+                let res                = await this.phoneIsExists({
+                    date,
+                    phone,
+                    id,
+                });
+                this.phoneInputLoading = false;
+
+                if (res.result) {
+                    let data = res.data.data;
+
+                    if (data.exists) {
+                        this.$alert('这一天当前电话号码已经有预约了,请确认', '确认信息', {
+                            confirmButtonText: '知道了',
+                        });
+                    }
+                }
+
+            },
             allExpertOfId(id) {
                 if (this.experts.length === 0) {
                     return null;
@@ -485,9 +534,11 @@
                 return rests;
             },
             async handleFormDateChange(value) {
+                console.log('value :', value);
                 if (value) {
-                    await this.handleFormRest(value);
-                    this.hasTimelineOrRest(value);
+                    this.phoneExists();
+                    // await this.handleFormRest(value);
+                    // this.hasTimelineOrRest(value);
                 }
             },
             hasTimelineOrRest(value) {
@@ -507,7 +558,6 @@
                     this.form.timeline_id = item.id;
                 }
             },
-
             async handleFormRest(date) {
                 this.formDateLoading = true;
                 await this.getRestOfData({ date });
@@ -540,9 +590,10 @@
                 await this.handleDateInfo();
                 this.loading = false;
             },
-            async handleDateInfo() {
-                await this.handleGetReservation(this.dateTime);
-                await this.handleGetRest(this.dateTime);
+            async handleDateInfo(date, strict) {
+                date = date || this.dateTime;
+                await this.handleGetReservation(date, strict);
+                await this.handleGetRest(date, strict);
             },
             handleColumnGetRest() {
                 this.handleGetRest(this.dateTime);
@@ -550,13 +601,13 @@
             handleColumnGetReservation() {
                 this.handleGetReservation(this.dateTime);
             },
-            async handleGetReservation(date) {
+            async handleGetReservation(date, strict) {
                 this.loadingText = '正在加载当天预约信息..';
-                await this.reservationDateData({ date });
+                await this.reservationDateData({ date, strict });
             },
-            async handleGetRest(date) {
+            async handleGetRest(date, strict) {
                 this.loadingText = '正在加载当天医生休息情况..';
-                await this.getRestOfData({ date });
+                await this.getRestOfData({ date, strict });
             },
             async handleSearch() {
                 !this.loading && (this.loading = true);
@@ -571,11 +622,13 @@
                 let form = this.$refs.form;
                 form.validate(async (valid) => {
                     if (valid) {
-                        this.submitLoading = true;
+                        this.submitLoading    = true;
+                        this.form.date        = moment(this.form.date).format('YYYY-MM-DD HH:mm:ss');
+                        this.form.description = this.form.description || undefined;
                         this.dialogType === 'new' ? await this.handleNewReservation() : await this.handleChangeReservation();
                         this.submitLoading = false;
                         this.dialogStatus  = false;
-                        this.handleDateInfo();
+                        this.handleDateInfo(null, true);
                     }
                 })
             },
@@ -586,12 +639,10 @@
             },
             async handleNewReservation() {
                 let res = await this.addDateReservation(this.form);
-                this.handleGetReservation();
                 responseNotify(res);
             },
             async handleChangeReservation() {
                 let res = await this.updateReservation(this.form);
-                this.handleGetReservation(this.dateTime);
                 responseNotify(res);
             },
             async handleDialogOpen() {

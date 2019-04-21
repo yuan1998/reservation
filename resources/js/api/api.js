@@ -55,6 +55,7 @@ const API = {
     RESERVATION_UPDATE: { url: 'reservation/', method: 'PUT', status: 200 },
     RESERVATION_DELETE: { url: 'reservation/multiple/', method: 'DELETE', status: 204 },
     RESERVATION_COUNT : { url: 'reservation/count', method: 'GET', status: 200 },
+    RESERVATION_PHONE : { url: 'reservation/phoneExists', method: 'POST', status: 200 },
 
     ACTIVITY_INDEX: { url: 'activity/', method: 'GET', status: 200 },
 

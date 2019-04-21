@@ -38,6 +38,12 @@
                                 {{ ProjectName[key] }}
                             </div>
                         </el-form-item>
+                        <el-form-item label="预约时间 :">
+                            <div class="item-text">
+                                {{ each.date }}
+                            </div>
+                        </el-form-item>
+
 
                         <el-form-item label="医生 :">
                             <div class="item-text">
@@ -176,10 +182,14 @@
 
                 let result = {};
                 (this.reservations || []).forEach((item) => {
-                    if (!item.timeline_id || !oneOf(item.timeline_id, this.idOfTimelines)) {
-                        let tl = hasTime(item.date);
-                        tl && (item.timeline_id = tl.id);
+                    let tl = hasTime(item.date);
+                    if (tl) {
+                        item.timeline_id = tl.id;
                     }
+                    else {
+                        return;
+                    }
+
                     if (item.timeline_id === this.id && item.expert_id === id) {
                         if (!result[ item.project_id ]) {
                             result[ item.project_id ] = [];

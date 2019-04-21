@@ -73,7 +73,6 @@ class ReservationController extends Controller
 
 
         $data         = $request->all();
-        $data['date'] = Carbon::parse($data['date'])->toDateTimeString();
 
         $user                    = $this->getUser();
         $data['created_user_id'] = $user->id;
@@ -99,7 +98,7 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        if (!$this->hasPermission(['reservation:index','reservation:table'])) {
+        if (!$this->hasPermission(['reservation:index', 'reservation:table'])) {
             return $this->respondPermission();
         }
         return new ReservationResource($reservation);
@@ -120,15 +119,7 @@ class ReservationController extends Controller
         $data = $request->all();
 
         $user                    = $this->getUser();
-        $data['date'] = Carbon::parse($data['date'])->toDateTimeString();
         $data['updated_user_id'] = $user->id;
-
-        if (!@$data['description']) {
-            $data['description'] = '';
-        }
-        if (!@$data['remark']) {
-            $data['remark'] = '';
-        }
 
         $origin = $reservation->toArray();
         $reservation->update($data);
@@ -158,12 +149,33 @@ class ReservationController extends Controller
 
     public function multipleDestroy($ids)
     {
-
         if (!$this->hasPermission('reservation:destroy')) {
             return $this->respondPermission();
         }
 
         return $this->destroyIds($ids, Reservation::query(), ':causer.name 删除了 :subject.name 的预约');
+    }
+
+    public function phoneIsRepeat(Request $request)
+    {
+        $date  = $request->get('date');
+        $phone = $request->get('phone');
+        $id = $request->get('id');
+
+        if (!$date || !$phone) {
+            return $this->responseError('Parameter Error.');
+        }
+        $date = Carbon::parse($date)->toDateTimeString();
+        $query = Reservation::query();
+
+        if ($id) {
+            $query->where('id' , '<>' , $id);
+        }
+
+        $result = $query->whereDate('date', $date)->where('phone', $phone)->exists();
+        return $this->responseSuccess([
+            'exists' => $result
+        ]);
     }
 
     public function count(Request $request)

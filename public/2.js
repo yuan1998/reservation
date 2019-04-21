@@ -154,6 +154,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -199,9 +205,12 @@ __webpack_require__.r(__webpack_exports__);
       var id = this.item.id;
       var result = {};
       (this.reservations || []).forEach(function (item) {
-        if (!item.timeline_id || !Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["oneOf"])(item.timeline_id, _this.idOfTimelines)) {
-          var tl = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["hasTime"])(item.date);
-          tl && (item.timeline_id = tl.id);
+        var tl = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["hasTime"])(item.date);
+
+        if (tl) {
+          item.timeline_id = tl.id;
+        } else {
+          return;
         }
 
         if (item.timeline_id === _this.id && item.expert_id === id) {
@@ -458,12 +467,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
+/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
@@ -640,18 +649,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 var today = moment__WEBPACK_IMPORTED_MODULE_3___default()().format('YYYY-MM-DD');
+console.log('today :', today);
 var defaultForm = {
   name: '',
   age: '',
   phone: '',
   sex: '女',
   description: "",
-  remark: '',
+  remark: undefined,
   timeline_id: '',
   project_id: '',
   expert_id: '',
@@ -675,17 +692,75 @@ var defaultForm = {
     }
   },
   data: function data() {
-    var validatePhone = function validatePhone(rule, value, callback) {
-      if (!value) {
-        callback(new Error('电话不能为空'));
-      } else {
-        if (!/^1[34578]\d{9}$/.test(value)) {
-          callback('请输入正确的电话号码');
-        } else {
-          callback();
-        }
-      }
-    };
+    var _this = this;
+
+    var validatePhone =
+    /*#__PURE__*/
+    function () {
+      var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee(rule, value, callback) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!value) {
+                  callback(new Error('电话不能为空'));
+                } else {
+                  if (!/^1[34578]\d{9}$/.test(value)) {
+                    callback('请输入正确的电话号码');
+                  } else {
+                    _this.phoneExists();
+
+                    callback();
+                  }
+                }
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function validatePhone(_x, _x2, _x3) {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    var validateDate =
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee2(rule, value, callback) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!value) {
+                  callback(new Error('日期不能为空'));
+                } else {
+                  if (Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["hasTime"])(value)) {
+                    callback();
+                  } else {
+                    callback('这个时间不上班');
+                  }
+                }
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function validateDate(_x4, _x5, _x6) {
+        return _ref2.apply(this, arguments);
+      };
+    }();
 
     var dateTime = this.$route.query.date || today;
     return {
@@ -749,6 +824,9 @@ var defaultForm = {
           required: true,
           message: '请选择日期',
           trigger: 'blur'
+        }, {
+          validator: validateDate,
+          trigger: 'blur'
         }],
         timeline_id: [{
           required: true,
@@ -773,6 +851,7 @@ var defaultForm = {
           trigger: 'blur'
         }]
       },
+      phoneInputLoading: false,
       submitLoading: false,
       formDateLoading: false // projects         : [],
       // experts          : [],
@@ -786,7 +865,7 @@ var defaultForm = {
   mounted: function mounted() {
     this.handleInit();
   },
-  computed: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
+  computed: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
     restDate: function restDate(state) {
       var date = moment__WEBPACK_IMPORTED_MODULE_3___default()(this.dateTime).format('YYYY-MM-DD');
       var data = state.Rest.restData;
@@ -840,17 +919,17 @@ var defaultForm = {
         return this.dialogFormVisible;
       },
       set: function set(val) {
-        var _this = this;
+        var _this2 = this;
 
         this.showDialog = val;
 
         if (val) {
           this.$nextTick(function () {
-            _this.dialogFormVisible = val;
+            _this2.dialogFormVisible = val;
           });
         } else {
           setTimeout(function () {
-            _this.dialogFormVisible = val;
+            _this2.dialogFormVisible = val;
           }, 250);
         }
       }
@@ -904,7 +983,7 @@ var defaultForm = {
       return result;
     },
     formExpert: function formExpert() {
-      var _this2 = this;
+      var _this3 = this;
 
       var expert_id = this.form.expert_id;
       var rests = this.handleGetFormDateRestId('timeline_id', 'expert_id') || [];
@@ -916,7 +995,7 @@ var defaultForm = {
           item.disabled = true;
 
           if (expert_id === item.id) {
-            _this2.form.expert_id = '';
+            _this3.form.expert_id = '';
           }
         }
 
@@ -924,7 +1003,7 @@ var defaultForm = {
       });
     },
     formTimeline: function formTimeline() {
-      var _this3 = this;
+      var _this4 = this;
 
       var timeline_id = this.form.timeline_id;
       var rests = this.handleGetFormDateRestId('expert_id', 'timeline_id') || [];
@@ -934,7 +1013,7 @@ var defaultForm = {
 
         if (condition) {
           if (timeline_id === item.id) {
-            _this3.form.timeline_id = '';
+            _this4.form.timeline_id = '';
           }
         }
 
@@ -942,16 +1021,17 @@ var defaultForm = {
       });
     },
     projectItem: function projectItem() {
-      var _this4 = this;
+      var _this5 = this;
 
       return (this.projects || []).find(function (item) {
-        return item.id === _this4.project;
+        return item.id === _this5.project;
       });
     }
   }),
-  methods: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])({
+  methods: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])({
     // 获取 预约
     reservationDateData: 'Reservation/reservationDateData',
+    phoneIsExists: 'Reservation/phoneIsExists',
     // 获取医生 休息
     getRestOfData: 'Rest/getRestOfData',
     // 获取 时间段
@@ -963,6 +1043,54 @@ var defaultForm = {
     addDateReservation: 'Reservation/addDateReservation',
     updateReservation: 'Reservation/updateReservation'
   }), {
+    phoneExists: function () {
+      var _phoneExists = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee3() {
+        var _this$form2, date, phone, id, res, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this$form2 = this.form, date = _this$form2.date, phone = _this$form2.phone, id = _this$form2.id;
+                date = moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format('YYYY-MM-DD');
+                this.phoneInputLoading = true;
+                _context3.next = 5;
+                return this.phoneIsExists({
+                  date: date,
+                  phone: phone,
+                  id: id
+                });
+
+              case 5:
+                res = _context3.sent;
+                this.phoneInputLoading = false;
+
+                if (res.result) {
+                  data = res.data.data;
+
+                  if (data.exists) {
+                    this.$alert('这一天当前电话号码已经有预约了,请确认', '确认信息', {
+                      confirmButtonText: '知道了'
+                    });
+                  }
+                }
+
+              case 8:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function phoneExists() {
+        return _phoneExists.apply(this, arguments);
+      }
+
+      return phoneExists;
+    }(),
     allExpertOfId: function allExpertOfId(id) {
       if (this.experts.length === 0) {
         return null;
@@ -996,33 +1124,29 @@ var defaultForm = {
       return rests;
     },
     handleFormDateChange: function () {
-      var _handleFormDateChange = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _handleFormDateChange = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(value) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee4(value) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                if (!value) {
-                  _context.next = 4;
-                  break;
+                console.log('value :', value);
+
+                if (value) {
+                  this.phoneExists(); // await this.handleFormRest(value);
+                  // this.hasTimelineOrRest(value);
                 }
 
-                _context.next = 3;
-                return this.handleFormRest(value);
-
-              case 3:
-                this.hasTimelineOrRest(value);
-
-              case 4:
+              case 2:
               case "end":
-                return _context.stop();
+                return _context4.stop();
             }
           }
-        }, _callee, this);
+        }, _callee4, this);
       }));
 
-      function handleFormDateChange(_x) {
+      function handleFormDateChange(_x7) {
         return _handleFormDateChange.apply(this, arguments);
       }
 
@@ -1047,15 +1171,15 @@ var defaultForm = {
       }
     },
     handleFormRest: function () {
-      var _handleFormRest = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _handleFormRest = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(date) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee5(date) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.formDateLoading = true;
-                _context2.next = 3;
+                _context5.next = 3;
                 return this.getRestOfData({
                   date: date
                 });
@@ -1065,25 +1189,25 @@ var defaultForm = {
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context5.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee5, this);
       }));
 
-      function handleFormRest(_x2) {
+      function handleFormRest(_x8) {
         return _handleFormRest.apply(this, arguments);
       }
 
       return handleFormRest;
     }(),
     loadInto: function loadInto() {
-      var _this5 = this;
+      var _this6 = this;
 
       var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 250;
       this.loading = true;
       setTimeout(function () {
-        _this5.loading = false;
+        _this6.loading = false;
       }, duration);
     },
     handleChangeExpert: function handleChangeExpert(item) {
@@ -1098,30 +1222,30 @@ var defaultForm = {
       }
     },
     handleInit: function () {
-      var _handleInit = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _handleInit = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 !this.loading && (this.loading = true);
                 this.loadingText = '正在加载时间段..';
-                _context3.next = 4;
+                _context6.next = 4;
                 return this.getTimeline();
 
               case 4:
                 this.loadingText = '正在加载项目..';
-                _context3.next = 7;
+                _context6.next = 7;
                 return this.getProject();
 
               case 7:
                 this.loadingText = '正在加载医生..';
-                _context3.next = 10;
+                _context6.next = 10;
                 return this.getExpert();
 
               case 10:
-                _context3.next = 12;
+                _context6.next = 12;
                 return this.handleDateInfo();
 
               case 12:
@@ -1129,10 +1253,10 @@ var defaultForm = {
 
               case 13:
               case "end":
-                return _context3.stop();
+                return _context6.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee6, this);
       }));
 
       function handleInit() {
@@ -1142,29 +1266,30 @@ var defaultForm = {
       return handleInit;
     }(),
     handleDateInfo: function () {
-      var _handleDateInfo = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _handleDateInfo = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee7(date, strict) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context4.next = 2;
-                return this.handleGetReservation(this.dateTime);
+                date = date || this.dateTime;
+                _context7.next = 3;
+                return this.handleGetReservation(date, strict);
 
-              case 2:
-                _context4.next = 4;
-                return this.handleGetRest(this.dateTime);
+              case 3:
+                _context7.next = 5;
+                return this.handleGetRest(date, strict);
 
-              case 4:
+              case 5:
               case "end":
-                return _context4.stop();
+                return _context7.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee7, this);
       }));
 
-      function handleDateInfo() {
+      function handleDateInfo(_x9, _x10) {
         return _handleDateInfo.apply(this, arguments);
       }
 
@@ -1177,97 +1302,19 @@ var defaultForm = {
       this.handleGetReservation(this.dateTime);
     },
     handleGetReservation: function () {
-      var _handleGetReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _handleGetReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(date) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                this.loadingText = '正在加载当天预约信息..';
-                _context5.next = 3;
-                return this.reservationDateData({
-                  date: date
-                });
-
-              case 3:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, this);
-      }));
-
-      function handleGetReservation(_x3) {
-        return _handleGetReservation.apply(this, arguments);
-      }
-
-      return handleGetReservation;
-    }(),
-    handleGetRest: function () {
-      var _handleGetRest = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(date) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                this.loadingText = '正在加载当天医生休息情况..';
-                _context6.next = 3;
-                return this.getRestOfData({
-                  date: date
-                });
-
-              case 3:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, this);
-      }));
-
-      function handleGetRest(_x4) {
-        return _handleGetRest.apply(this, arguments);
-      }
-
-      return handleGetRest;
-    }(),
-    handleSearch: function () {
-      var _handleSearch = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                !this.loading && (this.loading = true);
-                this.loading = false;
-
-              case 2:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7, this);
-      }));
-
-      function handleSearch() {
-        return _handleSearch.apply(this, arguments);
-      }
-
-      return handleSearch;
-    }(),
-    handleColumnReservation: function () {
-      var _handleColumnReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(type, item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee8(date, strict) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                this.dialogType = type;
-                this.form = Object.assign({}, defaultForm, item);
-                this.dialogStatus = true;
+                this.loadingText = '正在加载当天预约信息..';
+                _context8.next = 3;
+                return this.reservationDateData({
+                  date: date,
+                  strict: strict
+                });
 
               case 3:
               case "end":
@@ -1277,81 +1324,53 @@ var defaultForm = {
         }, _callee8, this);
       }));
 
-      function handleColumnReservation(_x5, _x6) {
-        return _handleColumnReservation.apply(this, arguments);
+      function handleGetReservation(_x11, _x12) {
+        return _handleGetReservation.apply(this, arguments);
       }
 
-      return handleColumnReservation;
+      return handleGetReservation;
     }(),
-    handleValidatorForm: function handleValidatorForm() {
-      var _this6 = this;
-
-      var form = this.$refs.form;
-      form.validate(
+    handleGetRest: function () {
+      var _handleGetRest = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      function () {
-        var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-        /*#__PURE__*/
-        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(valid) {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-            while (1) {
-              switch (_context9.prev = _context9.next) {
-                case 0:
-                  if (!valid) {
-                    _context9.next = 12;
-                    break;
-                  }
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee9(date, strict) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                this.loadingText = '正在加载当天医生休息情况..';
+                _context9.next = 3;
+                return this.getRestOfData({
+                  date: date,
+                  strict: strict
+                });
 
-                  _this6.submitLoading = true;
-
-                  if (!(_this6.dialogType === 'new')) {
-                    _context9.next = 7;
-                    break;
-                  }
-
-                  _context9.next = 5;
-                  return _this6.handleNewReservation();
-
-                case 5:
-                  _context9.next = 9;
-                  break;
-
-                case 7:
-                  _context9.next = 9;
-                  return _this6.handleChangeReservation();
-
-                case 9:
-                  _this6.submitLoading = false;
-                  _this6.dialogStatus = false;
-
-                  _this6.handleDateInfo();
-
-                case 12:
-                case "end":
-                  return _context9.stop();
-              }
+              case 3:
+              case "end":
+                return _context9.stop();
             }
-          }, _callee9);
-        }));
+          }
+        }, _callee9, this);
+      }));
 
-        return function (_x7) {
-          return _ref.apply(this, arguments);
-        };
-      }());
-    },
-    handleDateTimeChange: function () {
-      var _handleDateTimeChange = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      function handleGetRest(_x13, _x14) {
+        return _handleGetRest.apply(this, arguments);
+      }
+
+      return handleGetRest;
+    }(),
+    handleSearch: function () {
+      var _handleSearch = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(value) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                if (value && !this.loading) {
-                  this.handleInit();
-                }
+                !this.loading && (this.loading = true);
+                this.loading = false;
 
-              case 1:
+              case 2:
               case "end":
                 return _context10.stop();
             }
@@ -1359,35 +1378,144 @@ var defaultForm = {
         }, _callee10, this);
       }));
 
-      function handleDateTimeChange(_x8) {
+      function handleSearch() {
+        return _handleSearch.apply(this, arguments);
+      }
+
+      return handleSearch;
+    }(),
+    handleColumnReservation: function () {
+      var _handleColumnReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee11(type, item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                this.dialogType = type;
+                this.form = Object.assign({}, defaultForm, item);
+                this.dialogStatus = true;
+
+              case 3:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this);
+      }));
+
+      function handleColumnReservation(_x15, _x16) {
+        return _handleColumnReservation.apply(this, arguments);
+      }
+
+      return handleColumnReservation;
+    }(),
+    handleValidatorForm: function handleValidatorForm() {
+      var _this7 = this;
+
+      var form = this.$refs.form;
+      form.validate(
+      /*#__PURE__*/
+      function () {
+        var _ref3 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee12(valid) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee12$(_context12) {
+            while (1) {
+              switch (_context12.prev = _context12.next) {
+                case 0:
+                  if (!valid) {
+                    _context12.next = 14;
+                    break;
+                  }
+
+                  _this7.submitLoading = true;
+                  _this7.form.date = moment__WEBPACK_IMPORTED_MODULE_3___default()(_this7.form.date).format('YYYY-MM-DD HH:mm:ss');
+                  _this7.form.description = _this7.form.description || undefined;
+
+                  if (!(_this7.dialogType === 'new')) {
+                    _context12.next = 9;
+                    break;
+                  }
+
+                  _context12.next = 7;
+                  return _this7.handleNewReservation();
+
+                case 7:
+                  _context12.next = 11;
+                  break;
+
+                case 9:
+                  _context12.next = 11;
+                  return _this7.handleChangeReservation();
+
+                case 11:
+                  _this7.submitLoading = false;
+                  _this7.dialogStatus = false;
+
+                  _this7.handleDateInfo(null, true);
+
+                case 14:
+                case "end":
+                  return _context12.stop();
+              }
+            }
+          }, _callee12);
+        }));
+
+        return function (_x17) {
+          return _ref3.apply(this, arguments);
+        };
+      }());
+    },
+    handleDateTimeChange: function () {
+      var _handleDateTimeChange = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee13(value) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                if (value && !this.loading) {
+                  this.handleInit();
+                }
+
+              case 1:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13, this);
+      }));
+
+      function handleDateTimeChange(_x18) {
         return _handleDateTimeChange.apply(this, arguments);
       }
 
       return handleDateTimeChange;
     }(),
     handleNewReservation: function () {
-      var _handleNewReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _handleNewReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee14() {
         var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
-                _context11.next = 2;
+                _context14.next = 2;
                 return this.addDateReservation(this.form);
 
               case 2:
-                res = _context11.sent;
-                this.handleGetReservation();
+                res = _context14.sent;
                 Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["responseNotify"])(res);
 
-              case 5:
+              case 4:
               case "end":
-                return _context11.stop();
+                return _context14.stop();
             }
           }
-        }, _callee11, this);
+        }, _callee14, this);
       }));
 
       function handleNewReservation() {
@@ -1397,28 +1525,27 @@ var defaultForm = {
       return handleNewReservation;
     }(),
     handleChangeReservation: function () {
-      var _handleChangeReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _handleChangeReservation = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee15() {
         var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
-                _context12.next = 2;
+                _context15.next = 2;
                 return this.updateReservation(this.form);
 
               case 2:
-                res = _context12.sent;
-                this.handleGetReservation(this.dateTime);
+                res = _context15.sent;
                 Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["responseNotify"])(res);
 
-              case 5:
+              case 4:
               case "end":
-                return _context12.stop();
+                return _context15.stop();
             }
           }
-        }, _callee12, this);
+        }, _callee15, this);
       }));
 
       function handleChangeReservation() {
@@ -1428,27 +1555,27 @@ var defaultForm = {
       return handleChangeReservation;
     }(),
     handleDialogOpen: function () {
-      var _handleDialogOpen = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _handleDialogOpen = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee16() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee16$(_context16) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context16.prev = _context16.next) {
               case 0:
                 if (!(this.form && this.form.date)) {
-                  _context13.next = 3;
+                  _context16.next = 3;
                   break;
                 }
 
-                _context13.next = 3;
+                _context16.next = 3;
                 return this.handleFormRest(this.form.date);
 
               case 3:
               case "end":
-                return _context13.stop();
+                return _context16.stop();
             }
           }
-        }, _callee13, this);
+        }, _callee16, this);
       }));
 
       function handleDialogOpen() {
@@ -1679,6 +1806,20 @@ var render = function() {
                                 _vm._v(
                                   "\n                            " +
                                     _vm._s(_vm.ProjectName[key]) +
+                                    "\n                        "
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-form-item",
+                            { attrs: { label: "预约时间 :" } },
+                            [
+                              _c("div", { staticClass: "item-text" }, [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(each.date) +
                                     "\n                        "
                                 )
                               ])
@@ -2148,7 +2289,7 @@ var render = function() {
                               [
                                 _c("el-input", {
                                   attrs: {
-                                    placeholder: "姓名",
+                                    placeholder: "请输入姓名",
                                     autocomplete: "off"
                                   },
                                   model: {
@@ -2176,7 +2317,7 @@ var render = function() {
                                 _c("el-input", {
                                   attrs: {
                                     type: "number",
-                                    placeholder: "年龄",
+                                    placeholder: "请输入年龄",
                                     autocomplete: "off"
                                   },
                                   model: {
@@ -2204,7 +2345,10 @@ var render = function() {
                                 _c("el-input", {
                                   attrs: {
                                     type: "number",
-                                    placeholder: "",
+                                    "suffix-icon": _vm.phoneInputLoading
+                                      ? "el-icon-loading"
+                                      : "",
+                                    placeholder: "请输入电话号码",
                                     autocomplete: "off"
                                   },
                                   model: {

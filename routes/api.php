@@ -60,6 +60,7 @@ Route::group([
         Route::get('indexTable', 'ReservationController@indexTable');
         Route::get('count', 'ReservationController@count');
         Route::delete('multiple/{ids}', 'ReservationController@multipleDestroy');
+        Route::post('phoneExists','ReservationController@phoneIsRepeat');
     });
 
     Route::apiResource('expert', 'ExpertController');

@@ -1,7 +1,16 @@
-import moment                                                                                from 'moment';
-import { authRequest }                                                                       from "../../api/request";
-import { dateTimeToTime, fitlerObjectOfArray, idToArray, mergeApi, mergeOf, oneOf, pluckOf } from "../../utils/assets";
-import app                                                                                   from "../../app";
+import moment          from 'moment';
+import { authRequest } from "../../api/request";
+import {
+    dateTimeToTime,
+    fitlerObjectOfArray,
+    idToArray,
+    mergeApi,
+    mergeOf,
+    oneOf,
+    pluckOf,
+    timeToInt
+}                      from "../../utils/assets";
+import app             from "../../app";
 
 const defaultValue = {
     switchLoading     : false,
@@ -12,16 +21,23 @@ const format       = 'HH:mm';
 
 
 const parseItem = (item) => {
+    let bt = moment(item.begin_time, 'YYYY-MM-DD HH:mm:ss');
+    let et = moment(item.end_time, 'YYYY-MM-DD HH:mm:ss');
+
+    let btText = bt.format(format);
+    let etText = et.format(format);
     return {
         ...defaultValue,
         ...item,
-        beginTime: moment(item.begin_time, 'YYYY-MM-DD HH:mm:ss').format(format),
-        endTime  : moment(item.end_time, 'YYYY-MM-DD HH:mm:ss').format(format),
+        beginTime: btText,
+        endTime  : etText,
+        beginInt : timeToInt(btText),
+        endInt   : timeToInt(etText),
     }
 };
 
 const fields = [
-    'begin_time' , 'end_time', 'id'
+    'begin_time', 'end_time', 'id'
 ];
 
 export default {
@@ -54,7 +70,7 @@ export default {
                 return !oneOf(item.id, arr);
             })
         },
-        hasTime({timelines} , time) {
+        hasTime({ timelines }, time) {
             time      = dateTimeToTime(time);
             let index = timelines.findIndex((each) => {
                 let bt = moment(each.beginTime, format);

@@ -52,7 +52,7 @@ export default {
         },
 
         restData(state, { date, data }) {
-            data =  data.map((item) => {
+            data = data.map((item) => {
                 return parseItem(item);
             });
             Vue.set(state.restData, date, data);

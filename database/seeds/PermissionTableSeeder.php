@@ -70,7 +70,9 @@ class PermissionTableSeeder extends Seeder
         Role::create($this->mergeGuard(
             ['name' => 'manager', 'text' => '权限管理员']
         ))->givePermissionTo('permission:manager');
-
+        Role::create($this->mergeGuard(
+            ['name' => 'experience', 'text' => '体验者']
+        ))->givePermissionTo('reservation:table');
 
         Role::create($this->mergeGuard(
             ['name' => 'defaultUser', 'text' => '正常使用者']

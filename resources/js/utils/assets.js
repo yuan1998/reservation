@@ -148,17 +148,16 @@ export const dateTimeToTime = (date) => {
     return moment(moment(date).format('HH:mm'), 'HH:mm');
 };
 
+export const timeToInt = (time) => {
+    return parseInt(time.replace(':', ''));
+};
+
 const format         = 'HH:mm';
 export const hasTime = (time) => {
     let timelines = store.state.Timeline.timelines;
-    time          = dateTimeToTime(time);
-    return timelines.find((each) => {
-        let bt = moment(each.beginTime, format);
-        let et = moment(each.endTime, format);
-        return time.isBefore(et) && (time.isSameOrAfter(bt));
-    });
+    time          = timeToInt(moment(time).format(format));
+    return timelines.find((each) => each.beginInt <= time && time < each.endInt);
 };
-
 
 export const fitlerObjectOfArray = (obj, arr) => {
     obj = cloneOf(obj);
