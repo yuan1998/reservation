@@ -1,16 +1,15 @@
 import moment          from 'moment';
+import Vue             from 'vue';
 import { authRequest } from "../../api/request";
 import {
     dateTimeToTime,
     fitlerObjectOfArray,
     idToArray,
     mergeApi,
-    mergeOf,
     oneOf,
     pluckOf,
     timeToInt
 }                      from "../../utils/assets";
-import app             from "../../app";
 
 const defaultValue = {
     switchLoading     : false,
@@ -37,7 +36,7 @@ const parseItem = (item) => {
 };
 
 const fields = [
-    'begin_time', 'end_time', 'id'
+    'begin_time', 'end_time', 'id', 'limit'
 ];
 
 export default {
@@ -47,9 +46,9 @@ export default {
     },
     mutations : {
         timelines(state, data) {
-            state.timelines = data.map((item) => {
+            Vue.set(state, 'timelines', data.map((item) => {
                 return parseItem(item);
-            });
+            }));
         },
         changeTimelineOfId(state, data) {
             let index = state.timelines.findIndex((item) => item.id === data.id);
@@ -77,8 +76,6 @@ export default {
                 let et = moment(each.endTime, format);
                 return time.isBefore(et) && (time.isSame(bt) || time.isAfter(bt));
             });
-
-            console.log('index :', ~index ? timelines[ index ] : null);
             return ~index ? timelines[ index ] : null;
         }
     },

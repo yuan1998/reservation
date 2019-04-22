@@ -13,6 +13,7 @@
                               style="width: 100%">
                         <el-table-column prop="id"
                                          label="编号"
+                                         align="center"
                                          width="55"/>
                         <el-table-column prop="beginTime"
                                          align="center"
@@ -22,11 +23,15 @@
                                          align="center"
                                          label="结束时间"
                                          min-width="180"/>
+                        <el-table-column prop="limit"
+                                         align="center"
+                                         label="预约上限"
+                                         min-width="180"/>
                         <el-table-column prop="created_at"
                                          align="center"
                                          label="创建日期"
                                          width="180"/>
-                        <el-table-column min-width="200"
+                        <el-table-column min-width="150"
                                          v-if="permissionArr.store || permissionArr.update || permissionArr.destroy"
                                          align="right">
                             <template slot="header" slot-scope="scope">
@@ -46,7 +51,7 @@
                                 <el-button size="mini"
                                            v-if="permissionArr.update"
                                            @click="handleEdit(scope.row, 'edit')">
-                                    Edit
+                                    修改
                                 </el-button>
                                 <el-popover
                                         v-if="permissionArr.destroy"
@@ -69,7 +74,7 @@
                                     <el-button slot="reference"
                                                size="mini"
                                                type="danger">
-                                        Delete
+                                        删除
                                     </el-button>
                                 </el-popover>
                             </template>
@@ -93,7 +98,9 @@
                                 placeholder="选择时间范围">
                         </el-time-picker>
                     </el-form-item>
-
+                    <el-form-item label="预约上限" prop="limit" :label-width="formLabelWidth">
+                        <el-input-number v-model="form.limit" :min="0" :max="100"/>
+                    </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogStatus = false">
@@ -117,6 +124,7 @@
 
     const defaultForm = {
         valueTime: [ new Date(2019, 3, 8, 8, 40), new Date(2019, 3, 8, 9, 40) ],
+        limit    : 1,
     };
 
     export default {
@@ -197,7 +205,7 @@
                 this.loadingText = '穿梭时空间隙中...';
                 // this.timelines   =
                 await this.getTimelines();
-                this.loading     = false;
+                this.loading = false;
             },
             handleEdit(item = {}, type = 'new') {
                 if (item.begin_time) {

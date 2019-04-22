@@ -160,6 +160,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -170,7 +171,8 @@ __webpack_require__.r(__webpack_exports__);
     dateTime: String,
     rests: Array,
     reservations: Array,
-    timelines: Array
+    timelines: Array,
+    timeline: Object
   },
   data: function data() {
     return {
@@ -182,6 +184,12 @@ __webpack_require__.r(__webpack_exports__);
     ProjectName: 'Project/idOfName',
     permissionsName: 'Auth/permission'
   }), {
+    limitText: function limitText() {
+      return "".concat(this.reservationCount, "/").concat(this.timeline.limit);
+    },
+    limited: function limited() {
+      return this.reservationCount >= this.timeline.limit;
+    },
     idOfTimelines: function idOfTimelines() {
       return this.timelines.map(function (each) {
         return each.id;
@@ -205,15 +213,15 @@ __webpack_require__.r(__webpack_exports__);
       var id = this.item.id;
       var result = {};
       (this.reservations || []).forEach(function (item) {
-        var tl = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["hasTime"])(item.date);
+        if (item.expert_id === id) {
+          var tl = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["hasTime"])(item.date);
 
-        if (tl) {
-          item.timeline_id = tl.id;
-        } else {
-          return;
-        }
+          if (tl && tl.id === _this.id) {
+            item.timeline_id = tl.id;
+          } else {
+            return;
+          }
 
-        if (item.timeline_id === _this.id && item.expert_id === id) {
           if (!result[item.project_id]) {
             result[item.project_id] = [];
           }
@@ -227,6 +235,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return result;
+    },
+    reservationCount: function reservationCount() {
+      var _this2 = this;
+
+      return (this.reservations || []).filter(function (e) {
+        return e.timeline_id === _this2.id && e.expert_id === _this2.item.id;
+      }).length;
     },
     reservationLength: function reservationLength() {
       var count = 0;
@@ -242,11 +257,11 @@ __webpack_require__.r(__webpack_exports__);
       return this.reservation && Object.keys(this.reservation).length > 0;
     },
     restItem: function restItem() {
-      var _this2 = this;
+      var _this3 = this;
 
       var id = this.item.id;
       return (this.rests || []).filter(function (each) {
-        return each.timeline_id === _this2.id && each.expert_id === id;
+        return each.timeline_id === _this3.id && each.expert_id === id;
       });
     },
     isRest: function isRest() {
@@ -481,6 +496,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+//
 //
 //
 //
@@ -2027,17 +2043,29 @@ var render = function() {
                             attrs: {
                               size: "small",
                               type: "success",
+                              disabled: _vm.limited,
                               icon: "el-icon-plus"
                             },
                             on: {
                               click: function($event) {
                                 return _vm.handleReservation("new", {
-                                  expert_id: _vm.item.id
+                                  expert_id: _vm.item.id,
+                                  date:
+                                    _vm.dateTime +
+                                    " " +
+                                    _vm.timeline.beginTime +
+                                    ":00"
                                 })
                               }
                             }
                           },
-                          [_vm._v("\n                预约\n            ")]
+                          [
+                            _vm._v(
+                              "\n                预约 " +
+                                _vm._s(_vm.limitText) +
+                                "\n            "
+                            )
+                          ]
                         )
                       : _vm._e(),
                     _vm._v(" "),
@@ -2221,6 +2249,7 @@ var render = function() {
                                       dateTime: _vm.dateTime,
                                       rests: _vm.restDate,
                                       timelines: _vm.timelines,
+                                      timeline: item,
                                       reservations: _vm.reservationData
                                     },
                                     on: {

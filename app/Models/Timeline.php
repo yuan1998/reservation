@@ -15,7 +15,8 @@ class Timeline extends Model
     protected $fillable = [
         'begin_time',
         'end_time',
-        'order'
+        'order',
+        'limit'
     ];
 
     public function reservation()

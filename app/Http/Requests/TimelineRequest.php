@@ -26,6 +26,7 @@ class TimelineRequest extends FormRequest
         return [
             'begin_time' => 'date|required',
             'end_time'   => 'date|required',
+            'limit'      => 'integer'
         ];
     }
 }

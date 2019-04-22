@@ -58,12 +58,12 @@
                         </el-form-item>
                         <el-form-item label="创建人 :">
                             <div class="item-text">
-                                {{ each.createdBy  ? each.createdBy.name : '无'}}
+                                {{ each.createdBy ? each.createdBy.name : '无'}}
                             </div>
                         </el-form-item>
                         <el-form-item label="上次修改 :">
                             <div class="item-text">
-                                {{ each.updatedBy  ? each.updatedBy.name : '无'}}
+                                {{ each.updatedBy ? each.updatedBy.name : '无'}}
                             </div>
                         </el-form-item>
 
@@ -118,9 +118,10 @@
                 <el-button v-if="canAddReservation"
                            size="small"
                            type="success"
+                           :disabled="limited"
                            icon="el-icon-plus"
-                           @click="handleReservation('new' , {expert_id:item.id })">
-                    预约
+                           @click="handleReservation('new' , {expert_id:item.id , date: `${dateTime} ${timeline.beginTime}:00` })">
+                    预约 {{ limitText }}
                 </el-button>
                 <el-button v-if="canRest"
                            type="primary"
@@ -148,6 +149,7 @@
             rests       : Array,
             reservations: Array,
             timelines   : Array,
+            timeline    : Object,
         },
         data() {
             return {
@@ -160,6 +162,12 @@
                 ProjectName    : 'Project/idOfName',
                 permissionsName: 'Auth/permission',
             }),
+            limitText() {
+                return `${this.reservationCount}/${this.timeline.limit}`
+            },
+            limited() {
+                return this.reservationCount >= this.timeline.limit;
+            },
             idOfTimelines() {
                 return this.timelines.map((each) => {
                     return each.id;
@@ -182,18 +190,20 @@
 
                 let result = {};
                 (this.reservations || []).forEach((item) => {
-                    let tl = hasTime(item.date);
-                    if (tl) {
-                        item.timeline_id = tl.id;
-                    }
-                    else {
-                        return;
-                    }
+                    if (item.expert_id === id) {
+                        let tl = hasTime(item.date);
+                        if (tl && tl.id === this.id) {
+                            item.timeline_id = tl.id;
+                        }
+                        else {
+                            return;
+                        }
 
-                    if (item.timeline_id === this.id && item.expert_id === id) {
                         if (!result[ item.project_id ]) {
                             result[ item.project_id ] = [];
                         }
+
+
                         result[ item.project_id ].push(item);
                     }
                 });
@@ -202,6 +212,9 @@
                     result = result[ this.project.id ] ? { [ this.project.id ]: result[ this.project.id ] } : {};
                 }
                 return result;
+            },
+            reservationCount() {
+                return (this.reservations || []).filter(e => e.timeline_id === this.id && e.expert_id === this.item.id).length;
             },
             reservationLength() {
                 let count = 0;

@@ -98335,9 +98335,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _api_request__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../api/request */ "./resources/js/api/request.js");
-/* harmony import */ var _utils_assets__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/assets */ "./resources/js/utils/assets.js");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../app */ "./resources/js/app.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _api_request__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../api/request */ "./resources/js/api/request.js");
+/* harmony import */ var _utils_assets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/assets */ "./resources/js/utils/assets.js");
 
 
 
@@ -98360,12 +98361,12 @@ var parseItem = function parseItem(item) {
   return _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_2___default()({}, defaultValue, item, {
     beginTime: btText,
     endTime: etText,
-    beginInt: Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["timeToInt"])(btText),
-    endInt: Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["timeToInt"])(etText)
+    beginInt: Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["timeToInt"])(btText),
+    endInt: Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["timeToInt"])(etText)
   });
 };
 
-var fields = ['begin_time', 'end_time', 'id'];
+var fields = ['begin_time', 'end_time', 'id', 'limit'];
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: {
@@ -98373,9 +98374,9 @@ var fields = ['begin_time', 'end_time', 'id'];
   },
   mutations: {
     timelines: function timelines(state, data) {
-      state.timelines = data.map(function (item) {
+      vue__WEBPACK_IMPORTED_MODULE_4___default.a.set(state, 'timelines', data.map(function (item) {
         return parseItem(item);
-      });
+      }));
     },
     changeTimelineOfId: function changeTimelineOfId(state, data) {
       var index = state.timelines.findIndex(function (item) {
@@ -98394,20 +98395,19 @@ var fields = ['begin_time', 'end_time', 'id'];
       state.timelines.push(parseItem(data));
     },
     removeTimeline: function removeTimeline(state, ids) {
-      var arr = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["idToArray"])(ids);
+      var arr = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["idToArray"])(ids);
       state.timelines = state.timelines.filter(function (item) {
-        return !Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["oneOf"])(item.id, arr);
+        return !Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["oneOf"])(item.id, arr);
       });
     },
     hasTime: function hasTime(_ref, time) {
       var timelines = _ref.timelines;
-      time = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["dateTimeToTime"])(time);
+      time = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["dateTimeToTime"])(time);
       var index = timelines.findIndex(function (each) {
         var bt = moment__WEBPACK_IMPORTED_MODULE_3___default()(each.beginTime, format);
         var et = moment__WEBPACK_IMPORTED_MODULE_3___default()(each.endTime, format);
         return time.isBefore(et) && (time.isSame(bt) || time.isAfter(bt));
       });
-      console.log('index :', ~index ? timelines[index] : null);
       return ~index ? timelines[index] : null;
     }
   },
@@ -98470,11 +98470,11 @@ var fields = ['begin_time', 'end_time', 'id'];
             switch (_context2.prev = _context2.next) {
               case 0:
                 commit = _ref4.commit;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('TIMELINE_INDEX', {
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["mergeApi"])('TIMELINE_INDEX', {
                   data: data
                 });
                 _context2.next = 4;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 4:
                 res = _context2.sent;
@@ -98509,13 +98509,13 @@ var fields = ['begin_time', 'end_time', 'id'];
             switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref5.commit;
-                data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["fitlerObjectOfArray"])(data, fields);
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('TIMELINE_UPDATE', {
+                data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["fitlerObjectOfArray"])(data, fields);
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["mergeApi"])('TIMELINE_UPDATE', {
                   data: data
                 });
                 options.url = "".concat(options.url).concat(data.id);
                 _context3.next = 6;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 6:
                 res = _context3.sent;
@@ -98550,12 +98550,12 @@ var fields = ['begin_time', 'end_time', 'id'];
             switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref6.commit;
-                data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["fitlerObjectOfArray"])(data, fields);
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('TIMELINE_CREATE', {
+                data = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["fitlerObjectOfArray"])(data, fields);
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["mergeApi"])('TIMELINE_CREATE', {
                   data: data
                 });
                 _context4.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 5:
                 res = _context4.sent;
@@ -98590,10 +98590,10 @@ var fields = ['begin_time', 'end_time', 'id'];
             switch (_context5.prev = _context5.next) {
               case 0:
                 commit = _ref7.commit;
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('TIMELINE_DELETE');
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["mergeApi"])('TIMELINE_DELETE');
                 options.url = "".concat(options.url).concat(id);
                 _context5.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 5:
                 res = _context5.sent;
@@ -98629,13 +98629,13 @@ var fields = ['begin_time', 'end_time', 'id'];
               case 0:
                 state = _ref8.state;
                 data = {
-                  data: Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["pluckOf"])(state.timelines, 'id')
+                  data: Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["pluckOf"])(state.timelines, 'id')
                 };
-                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_5__["mergeApi"])('TIMELINE_ORDER', {
+                options = Object(_utils_assets__WEBPACK_IMPORTED_MODULE_6__["mergeApi"])('TIMELINE_ORDER', {
                   data: data
                 });
                 _context6.next = 5;
-                return Object(_api_request__WEBPACK_IMPORTED_MODULE_4__["authRequest"])(options);
+                return Object(_api_request__WEBPACK_IMPORTED_MODULE_5__["authRequest"])(options);
 
               case 5:
                 res = _context6.sent;

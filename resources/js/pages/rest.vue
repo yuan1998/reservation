@@ -54,6 +54,7 @@
                                       :dateTime="dateTime"
                                       :rests="restDate"
                                       :timelines="timelines"
+                                      :timeline="item"
                                       :reservations="reservationData"
                                       @get-rests="handleColumnGetRest"
                                       @get-reservation="handleColumnGetReservation"

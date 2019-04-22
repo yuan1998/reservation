@@ -251,12 +251,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 var defaultForm = {
-  valueTime: [new Date(2019, 3, 8, 8, 40), new Date(2019, 3, 8, 9, 40)]
+  valueTime: [new Date(2019, 3, 8, 8, 40), new Date(2019, 3, 8, 9, 40)],
+  limit: 1
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'timeline',
@@ -837,7 +845,12 @@ var render = function() {
                         },
                         [
                           _c("el-table-column", {
-                            attrs: { prop: "id", label: "编号", width: "55" }
+                            attrs: {
+                              prop: "id",
+                              label: "编号",
+                              align: "center",
+                              width: "55"
+                            }
                           }),
                           _vm._v(" "),
                           _c("el-table-column", {
@@ -860,6 +873,15 @@ var render = function() {
                           _vm._v(" "),
                           _c("el-table-column", {
                             attrs: {
+                              prop: "limit",
+                              align: "center",
+                              label: "预约上限",
+                              "min-width": "180"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: {
                               prop: "created_at",
                               align: "center",
                               label: "创建日期",
@@ -871,7 +893,7 @@ var render = function() {
                           _vm.permissionArr.update ||
                           _vm.permissionArr.destroy
                             ? _c("el-table-column", {
-                                attrs: { "min-width": "200", align: "right" },
+                                attrs: { "min-width": "150", align: "right" },
                                 scopedSlots: _vm._u(
                                   [
                                     {
@@ -939,7 +961,7 @@ var render = function() {
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                                Edit\n                            "
+                                                    "\n                                修改\n                            "
                                                   )
                                                 ]
                                               )
@@ -1052,7 +1074,7 @@ var render = function() {
                                                     },
                                                     [
                                                       _vm._v(
-                                                        "\n                                    Delete\n                                "
+                                                        "\n                                    删除\n                                "
                                                       )
                                                     ]
                                                   )
@@ -1066,7 +1088,7 @@ var render = function() {
                                   ],
                                   null,
                                   false,
-                                  2338009477
+                                  431586963
                                 )
                               })
                             : _vm._e()
@@ -1136,6 +1158,30 @@ var render = function() {
                                 _vm.$set(_vm.form, "valueTime", $$v)
                               },
                               expression: "form.valueTime"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            label: "预约上限",
+                            prop: "limit",
+                            "label-width": _vm.formLabelWidth
+                          }
+                        },
+                        [
+                          _c("el-input-number", {
+                            attrs: { min: 0, max: 100 },
+                            model: {
+                              value: _vm.form.limit,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "limit", $$v)
+                              },
+                              expression: "form.limit"
                             }
                           })
                         ],

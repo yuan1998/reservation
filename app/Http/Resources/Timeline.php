@@ -20,7 +20,8 @@ class Timeline extends JsonResource
             'id'         => $this->id,
             'begin_time' => $this->begin_time,
             'end_time'   => $this->end_time,
-            'order'      => $this->order,
+            'order'      => (int)$this->order,
+            'limit'      => (int)$this->limit,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];
