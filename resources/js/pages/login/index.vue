@@ -13,11 +13,17 @@
                     Login
                 </div>
                 <el-form-item label="" prop="username">
-                    <el-input prefix-icon="el-icon-my-yonghu" type="text" v-model="form.username"
+                    <el-input prefix-icon="el-icon-my-yonghu"
+                              type="text"
+                              v-model="form.username"
+                              placeholder="用户名"
                               autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="" prop="password">
-                    <el-input prefix-icon="el-icon-my-password" type="password" v-model="form.password"
+                    <el-input prefix-icon="el-icon-my-password"
+                              type="password"
+                              v-model="form.password"
+                              placeholder="密码"
                               autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item>

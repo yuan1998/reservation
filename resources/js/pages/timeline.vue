@@ -4,12 +4,12 @@
          v-loading.lock="loading"
          :element-loading-text="loadingText">
         <div class="table-container">
-            <div class="table-content">
+            <div class="table-content" ref="tableContent">
                 <SortableTable v-if="timelines" :can="permissionArr.update" @end="handleEnd" :loaded="!!timelines">
                     <el-table row-key="name"
                               ref="table"
                               :data="timelines"
-                              height="100%"
+                              :height="tableContentHeight"
                               style="width: 100%">
                         <el-table-column prop="id"
                                          label="编号"
@@ -121,6 +121,8 @@
     import { mapState, mapActions, mapMutations } from 'vuex';
     import SortableTable                          from '../components/sortable-table';
     import { responseNotify }                     from "../utils/assets";
+    import tableContent                           from '../mixins/tableContentHeight';
+
 
     const defaultForm = {
         valueTime: [ new Date(2019, 3, 8, 8, 40), new Date(2019, 3, 8, 9, 40) ],
@@ -129,6 +131,7 @@
 
     export default {
         name      : 'timeline',
+        mixins    : [ tableContent ],
         components: {
             SortableTable
         },

@@ -4,12 +4,12 @@
         <div class="table-container"
              v-loading.lock="loading"
              :element-loading-text="loadingText">
-            <div class="table-content">
+            <div class="table-content" ref="tableContent">
                 <SortableTable v-if="projects" :can="permissionArr.update" @end="handleEnd">
                     <el-table row-key="id"
                               ref="table"
                               :data="projects"
-                              height="100%"
+                              :height="tableContentHeight"
                               style="width: 100%">
                         <el-table-column
                                 type="selection"
@@ -120,6 +120,7 @@
     import { mapState, mapActions, mapMutations } from 'vuex';
     import SortableTable                          from '../components/sortable-table';
     import { responseNotify }                     from "../utils/assets";
+    import tableContent                           from '../mixins/tableContentHeight';
 
     const defaultForm = {
         name   : '',
@@ -128,6 +129,7 @@
 
     export default {
         name      : 'project',
+        mixins    : [ tableContent ],
         components: {
             SortableTable
         },

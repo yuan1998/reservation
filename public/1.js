@@ -22,6 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_avatar_png__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_avatar_png__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _components_UserColumn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/UserColumn */ "./resources/js/pages/Activity/components/UserColumn.vue");
 /* harmony import */ var _components_DateColumn__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/DateColumn */ "./resources/js/pages/Activity/components/DateColumn.vue");
+/* harmony import */ var _mixins_tableContentHeight__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../mixins/tableContentHeight */ "./resources/js/mixins/tableContentHeight.js");
 
 
 
@@ -122,6 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -136,6 +138,7 @@ var defaultForm = {
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'activities',
+  mixins: [_mixins_tableContentHeight__WEBPACK_IMPORTED_MODULE_8__["default"]],
   components: {
     UserColumn: _components_UserColumn__WEBPACK_IMPORTED_MODULE_6__["default"],
     DateColumn: _components_DateColumn__WEBPACK_IMPORTED_MODULE_7__["default"],
@@ -474,14 +477,17 @@ var render = function() {
         _vm.activities
           ? _c(
               "div",
-              { staticClass: "table-content" },
+              { ref: "tableContent", staticClass: "table-content" },
               [
                 _c(
                   "el-table",
                   {
                     ref: "table",
                     staticStyle: { width: "100%" },
-                    attrs: { data: _vm.activities, height: "100%" }
+                    attrs: {
+                      data: _vm.activities,
+                      height: _vm.tableContentHeight
+                    }
                   },
                   [
                     _c("el-table-column", {
@@ -831,6 +837,32 @@ var staticRenderFns = []
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/tableContentHeight.js":
+/*!***************************************************!*\
+  !*** ./resources/js/mixins/tableContentHeight.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    tableContentHeight: function tableContentHeight() {
+      var tableContent = this.$refs.tableContent;
+      console.log('tableContent :', tableContent);
+
+      if (!tableContent) {
+        return 750;
+      }
+
+      return tableContent.clientHeight || 750;
+    }
+  }
+});
 
 /***/ }),
 

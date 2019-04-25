@@ -1,11 +1,11 @@
 <template>
     <div class="expert-index-page page-container">
         <div class="table-container " :element-loading-text="loadingText" v-loading.lock="loading">
-            <div class="table-content">
+            <div class="table-content" ref="tableContent">
                 <el-table v-if="experts"
                           ref="table"
                           :data="experts"
-                          height="100%"
+                          :height="tableContentHeight"
                           style="width: 100%">
                     <el-table-column
                             prop="id"
@@ -135,6 +135,8 @@
     import avatar                                             from '../images/avatar.png';
     import ColumnPermission                                   from '../components/admin/role/column-permission'
     import { responseNotify }                                 from "../utils/assets";
+    import tableContent                                       from '../mixins/tableContentHeight';
+
 
     const defaultForm = {
         name       : '',
@@ -146,6 +148,7 @@
 
     export default {
         name      : 'expert',
+        mixins    : [ tableContent ],
         components: {
             ColumnPermission
         },
@@ -194,7 +197,7 @@
         computed  : {
             ...mapState('Expert', {
                 total    : state => state.total,
-                experts  : state => state.allExperts,
+                experts  : state => state.experts,
                 pageIndex: state => state.pageIndex,
             }),
             ...mapGetters({
@@ -250,6 +253,7 @@
             async handleGetExperts() {
                 this.loadingText = '医生报数中...';
                 await this.getExperts();
+                console.log('this.experts :', this.experts);
             },
             async handleGetProjects() {
                 this.loadingText = '项目计算中...';
@@ -336,9 +340,11 @@
             handleSizeChange() {
 
             },
-            handleCurrentChange(val) {
+            async handleCurrentChange(val) {
+                !this.loading && (this.loading = true);
                 this.setPage(val);
-                this.handleGetExperts();
+                await this.handleGetExperts();
+                this.loading = false;
             },
             handleSelectionChange(a) {
                 // console.log('this.$refs.table :', this.$refs.table.selection);

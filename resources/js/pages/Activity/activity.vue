@@ -1,10 +1,10 @@
 <template>
     <div class="activity-index-page page-container">
         <div class="table-container " :element-loading-text="loadingText" v-loading.lock="loading">
-            <div class="table-content" v-if="activities">
+            <div class="table-content" v-if="activities" ref="tableContent">
                 <el-table ref="table"
                           :data="activities"
-                          height="100%"
+                          :height="tableContentHeight"
                           style="width: 100%">
                     <el-table-column label="操作时间" min-width="180" fixed>
                         <template slot-scope="scope">
@@ -99,9 +99,11 @@
     import { mapState, mapActions, mapMutations } from 'vuex';
     import JsonViewer                             from 'vue-json-viewer'
 
-    import avatar     from '../../images/avatar.png';
-    import UserColumn from './components/UserColumn';
-    import DateColumn from './components/DateColumn';
+    import avatar       from '../../images/avatar.png';
+    import UserColumn   from './components/UserColumn';
+    import DateColumn   from './components/DateColumn';
+    import tableContent from '../../mixins/tableContentHeight';
+
 
     const defaultForm = {
         name       : '',
@@ -113,6 +115,7 @@
 
     export default {
         name      : 'activities',
+        mixins    : [ tableContent ],
         components: {
             UserColumn,
             DateColumn,

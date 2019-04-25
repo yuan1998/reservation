@@ -3,11 +3,11 @@
          v-loading.lock="loading"
          :element-loading-text="loadingText">
         <div class="table-container ">
-            <div class="table-content">
+            <div class="table-content" ref="tableContent">
                 <el-table v-if="users"
                           ref="table"
                           :data="filterUser"
-                          height="100%"
+                          :height="tableContentHeight"
                           style="width: 100%">
                     <el-table-column
                             type="selection"
@@ -168,6 +168,7 @@
     import avatar                                 from '../../../images/avatar.png';
     import ColumnPermission                       from '../role/column-permission';
     import { responseNotify, isNumeric, cloneOf } from "../../../utils/assets";
+    import tableContent                           from '../../../mixins/tableContentHeight';
 
     const defaultForm = {
         name           : '',
@@ -180,6 +181,7 @@
 
     export default {
         name      : 'user',
+        mixins    : [ tableContent ],
         components: {
             ColumnPermission
         },
@@ -254,6 +256,7 @@
                 page     : state => state.page,
                 total    : state => state.total
             }),
+
             filterUser() {
                 return this.users.filter(e => e.id !== 1);
             },

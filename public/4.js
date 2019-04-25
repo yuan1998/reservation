@@ -93,6 +93,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_avatar_png__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_images_avatar_png__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _components_admin_role_column_permission__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/admin/role/column-permission */ "./resources/js/components/admin/role/column-permission.vue");
 /* harmony import */ var _utils_assets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/assets */ "./resources/js/utils/assets.js");
+/* harmony import */ var _mixins_tableContentHeight__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../mixins/tableContentHeight */ "./resources/js/mixins/tableContentHeight.js");
 
 
 
@@ -228,6 +229,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -241,6 +243,7 @@ var defaultForm = {
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'expert',
+  mixins: [_mixins_tableContentHeight__WEBPACK_IMPORTED_MODULE_7__["default"]],
   components: {
     ColumnPermission: _components_admin_role_column_permission__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
@@ -337,7 +340,7 @@ var defaultForm = {
       return state.total;
     },
     experts: function experts(state) {
-      return state.allExperts;
+      return state.experts;
     },
     pageIndex: function pageIndex(state) {
       return state.pageIndex;
@@ -431,6 +434,9 @@ var defaultForm = {
                 return this.getExperts();
 
               case 3:
+                console.log('this.experts :', this.experts);
+
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -710,10 +716,36 @@ var defaultForm = {
       return handleDeleteExpert;
     }(),
     handleSizeChange: function handleSizeChange() {},
-    handleCurrentChange: function handleCurrentChange(val) {
-      this.setPage(val);
-      this.handleGetExperts();
-    },
+    handleCurrentChange: function () {
+      var _handleCurrentChange = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee10(val) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                !this.loading && (this.loading = true);
+                this.setPage(val);
+                _context10.next = 4;
+                return this.handleGetExperts();
+
+              case 4:
+                this.loading = false;
+
+              case 5:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function handleCurrentChange(_x4) {
+        return _handleCurrentChange.apply(this, arguments);
+      }
+
+      return handleCurrentChange;
+    }(),
     handleSelectionChange: function handleSelectionChange(a) {// console.log('this.$refs.table :', this.$refs.table.selection);
     }
   })
@@ -917,7 +949,7 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "table-content" },
+          { ref: "tableContent", staticClass: "table-content" },
           [
             _vm.experts
               ? _c(
@@ -925,7 +957,7 @@ var render = function() {
                   {
                     ref: "table",
                     staticStyle: { width: "100%" },
-                    attrs: { data: _vm.experts, height: "100%" }
+                    attrs: { data: _vm.experts, height: _vm.tableContentHeight }
                   },
                   [
                     _c(
@@ -1436,6 +1468,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_column_permission_vue_vue_type_template_id_fe9add50_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/tableContentHeight.js":
+/*!***************************************************!*\
+  !*** ./resources/js/mixins/tableContentHeight.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    tableContentHeight: function tableContentHeight() {
+      var tableContent = this.$refs.tableContent;
+      console.log('tableContent :', tableContent);
+
+      if (!tableContent) {
+        return 750;
+      }
+
+      return tableContent.clientHeight || 750;
+    }
+  }
+});
 
 /***/ }),
 

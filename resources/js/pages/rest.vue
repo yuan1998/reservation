@@ -30,12 +30,12 @@
                 </div>
 
             </div>
-            <div v-if="!loading" class="table-content">
+            <div v-if="!loading" class="table-content" ref="tableContent">
                 <el-table row-key="id"
                           ref="table"
                           border
                           :data="getData"
-                          height="100%"
+                          :height="tableContentHeight"
                           style="width: 100%">
                     <el-table-column prop="name"
                                      label=""
@@ -179,9 +179,10 @@
     import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
     import MyColumn                                           from '../components/admin/reseravtion-column';
     import { oneOf, responseNotify, hasTime }                 from "../utils/assets";
+    import tableContent                                       from '../mixins/tableContentHeight';
 
     const today = moment().format('YYYY-MM-DD');
-    console.log('today :', today);
+
     const defaultForm = {
         name       : '',
         age        : '',
@@ -197,6 +198,7 @@
 
     export default {
         name      : 'reservation',
+        mixins    : [ tableContent ],
         components: {
             MyColumn,
         },

@@ -135,6 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_sortable_table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/sortable-table */ "./resources/js/components/sortable-table.vue");
 /* harmony import */ var _utils_assets__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/assets */ "./resources/js/utils/assets.js");
+/* harmony import */ var _mixins_tableContentHeight__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../mixins/tableContentHeight */ "./resources/js/mixins/tableContentHeight.js");
 
 
 
@@ -256,6 +257,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -265,6 +267,7 @@ var defaultForm = {
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'project',
+  mixins: [_mixins_tableContentHeight__WEBPACK_IMPORTED_MODULE_6__["default"]],
   components: {
     SortableTable: _components_sortable_table__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
@@ -818,7 +821,7 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "table-content" },
+          { ref: "tableContent", staticClass: "table-content" },
           [
             _vm.projects
               ? _c(
@@ -836,7 +839,7 @@ var render = function() {
                         attrs: {
                           "row-key": "id",
                           data: _vm.projects,
-                          height: "100%"
+                          height: _vm.tableContentHeight
                         }
                       },
                       [
@@ -1337,6 +1340,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sortable_table_vue_vue_type_template_id_f5a3a778___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/tableContentHeight.js":
+/*!***************************************************!*\
+  !*** ./resources/js/mixins/tableContentHeight.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    tableContentHeight: function tableContentHeight() {
+      var tableContent = this.$refs.tableContent;
+      console.log('tableContent :', tableContent);
+
+      if (!tableContent) {
+        return 750;
+      }
+
+      return tableContent.clientHeight || 750;
+    }
+  }
+});
 
 /***/ }),
 

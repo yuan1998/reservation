@@ -52,6 +52,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -272,6 +278,7 @@ var render = function() {
                     attrs: {
                       "prefix-icon": "el-icon-my-yonghu",
                       type: "text",
+                      placeholder: "用户名",
                       autocomplete: "off"
                     },
                     model: {
@@ -294,6 +301,7 @@ var render = function() {
                     attrs: {
                       "prefix-icon": "el-icon-my-password",
                       type: "password",
+                      placeholder: "密码",
                       autocomplete: "off"
                     },
                     model: {

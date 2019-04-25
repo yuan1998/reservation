@@ -1,10 +1,10 @@
 <template>
     <div class="role-index-page page-container" v-loading.lock="loading" :element-loading-text="loadingText">
         <div class="table-container ">
-            <div class="table-content">
+            <div class="table-content" ref="tableContent">
                 <el-table v-if="roles"
                           :data="roles"
-                          height="100%"
+                          :height="tableContentHeight"
                           style="width: 100%">
                     <el-table-column
                             prop="id"
@@ -121,6 +121,8 @@
     import { mapActions, mapState } from 'vuex';
     import ColumnPermission         from './column-permission';
     import { responseNotify }       from "../../../utils/assets";
+    import tableContent             from '../../../mixins/tableContentHeight';
+
 
     const defaultForm = {
         name       : '',
@@ -130,6 +132,7 @@
 
     export default {
         name      : 'role',
+        mixins    : [ tableContent ],
         components: {
             ColumnPermission
         },
@@ -196,7 +199,6 @@
             this.handleInit();
         },
         methods   : {
-
             ...mapActions({
                 getPermissions: 'Permission/getPermissions',
                 getRoles      : 'Role/getRoles',
